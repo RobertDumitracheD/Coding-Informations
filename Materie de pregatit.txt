@@ -1,0 +1,234 @@
+TOPICS
+1. Streams - reduce/flatmap
+
+In Java, streams are a powerful feature introduced in Java 8 as part of the java.util.stream package. S
+treams allow you to perform various operations on collections of data in a functional-style manner, making code more concise, 
+readable, and efficient.
+
+Stream operations can be categorized into two types:
+
+Intermediate Operations: These operations transform the stream into another stream, allowing chaining of multiple intermediate operations. 
+Some common intermediate operations include filter, map, flatMap, distinct, sorted, peek, etc.
+
+Terminal Operations: These operations produce a final result or side-effect. Once a terminal operation is applied to a stream, 
+it cannot be reused. Examples of terminal operations are forEach, collect, reduce, count, min, max, etc.
+
+Let's go through each important method, including reduce and flatMap, with examples:
+
+filter: Filters elements based on a given predicate.
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+List<Integer> evenNumbers = numbers.stream()
+                                   .filter(n -> n % 2 == 0)
+                                   .collect(Collectors.toList());
+// Output: [2, 4, 6, 8, 10]
+map: Transforms each element of the stream into another value.
+
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+List<Integer> nameLengths = names.stream()
+                                 .map(String::length)
+                                 .collect(Collectors.toList());
+// Output: [5, 3, 7]
+
+flatMap: Flattens nested collections and maps each element to a stream.
+List<List<Integer>> nestedNumbers = Arrays.asList(Arrays.asList(1, 2), Arrays.asList(3, 4, 5), Arrays.asList(6, 7, 8, 9));
+List<Integer> flattenedNumbers = nestedNumbers.stream()
+                                             .flatMap(Collection::stream)
+                                             .collect(Collectors.toList());
+// Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+distinct: Removes duplicate elements from the stream.
+List<Integer> numbersWithDuplicates = Arrays.asList(1, 2, 3, 4, 3, 5, 2);
+List<Integer> distinctNumbers = numbersWithDuplicates.stream()
+                                                     .distinct()
+                                                     .collect(Collectors.toList());
+// Output: [1, 2, 3, 4, 5]
+
+
+sorted: Sorts the elements of the stream.
+List<Integer> unsortedNumbers = Arrays.asList(5, 2, 8, 1, 6, 3);
+List<Integer> sortedNumbers = unsortedNumbers.stream()
+                                             .sorted()
+                                             .collect(Collectors.toList());
+// Output: [1, 2, 3, 5, 6, 8]
+
+reduce: Performs a reduction operation on the elements of the stream.
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+int sum = numbers.stream()
+                 .reduce(0, Integer::sum);
+// Output: 15 (1 + 2 + 3 + 4 + 5)
+
+forEach: Applies an action to each element in the stream.
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+names.stream()
+     .forEach(System.out::println);
+// Output: Alice
+//         Bob
+//         Charlie
+
+collect: Performs a mutable reduction operation on the elements of the stream.
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+String concatenatedNames = names.stream()
+                               .collect(Collectors.joining(", "));
+// Output: "Alice, Bob, Charlie"
+
+Function<T, R>: Represents a function that takes an argument of type T and returns a result of type R. It is used for mapping operations in streams.
+
+Predicate<T>: Represents a function that takes an argument of type T and returns a boolean. It is used for filtering elements in streams.
+
+Consumer<T>: Represents a function that takes an argument of type T and returns no result. It is used for actions like printing, collecting, etc.
+
+Supplier<T>: Represents a function that produces a value of type T. It is used for generating values, e.g., in Stream.generate().
+
+BinaryOperator<T>: Represents a function that takes two arguments of type T and returns a result of type T. It is used for reduction operations, 
+like reduce() in streams.
+
+BiFunction<T, U, R>: Represents a function that takes two arguments of types T and U and returns a result of type R. It is used in
+ various stream operations.
+
+BiPredicate<T, U>: Represents a function that takes two arguments of types T and U and returns a boolean. It is used in various stream operations.
+
+map(Function<? super T,? extends R> mapper): Uses Function to transform elements in a stream.
+filter(Predicate<? super T> predicate): Uses Predicate to filter elements in a stream.
+forEach(Consumer<? super T> action): Uses Consumer to perform an action on each element in a stream.
+reduce(BinaryOperator<T> accumulator): Uses BinaryOperator to combine elements in a stream.
+collect(Collector<? super T, A, R> collector): Uses various functional interfaces in the Collector to accumulate elements into a collection.
+
+==============================================================================================================================
+
+2. Collections
+
+Collection Interfaces:
+List
+
+Interface: java.util.List
+Description: An ordered collection that allows duplicate elements. Elements are indexed, and you can access them by their index.
+Common Implementations: ArrayList, LinkedList
+
+add(E element): Adds an element to the end of the list.
+add(int index, E element): Adds an element at a specific index in the list.
+get(int index): Retrieves the element at the specified index.
+remove(int index): Removes the element at the specified index.
+size(): Returns the number of elements in the list.
+contains(Object obj): Checks if the list contains a specific element.
+indexOf(Object obj): Returns the index of the first occurrence of the specified element.
+isEmpty(): Checks if the list is empty.
+clear(): Removes all elements from the list.
+subList(int fromIndex, int toIndex): Returns a view of the portion of the list between the specified fromIndex, 
+inclusive, and toIndex, exclusive.
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListExample {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("Apple");
+        list.add("Banana");
+        list.add("Orange");
+
+        System.out.println(list.get(0)); // Output: "Apple"
+        System.out.println(list.size()); // Output: 3
+    }
+}
+
+
+Set
+
+Interface: java.util.Set
+Description: An unordered collection that does not allow duplicate elements. Each element is unique.
+Common Implementations: HashSet, TreeSet, LinkedHashSet
+
+add(E element): Adds an element to the set.
+remove(Object obj): Removes the specified element from the set.
+contains(Object obj): Checks if the set contains a specific element.
+size(): Returns the number of elements in the set.
+isEmpty(): Checks if the set is empty.
+clear(): Removes all elements from the set.
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class SetExample {
+    public static void main(String[] args) {
+        Set<String> set = new HashSet<>();
+        set.add("Apple");
+        set.add("Banana");
+        set.add("Orange");
+        set.add("Banana"); // Duplicate element, will be ignored
+
+        System.out.println(set.contains("Apple")); // Output: true
+        System.out.println(set.size()); // Output: 3
+    }
+}
+
+
+Queue
+
+Interface: java.util.Queue
+Description: A collection designed for holding elements before processing. It follows the FIFO (First-In-First-Out) order, but some implementations (e.g., PriorityQueue) may have different behavior based on element priority.
+Common Implementations: LinkedList, PriorityQueue
+
+add(E element): Adds an element to the queue.
+remove(): Removes and returns the element at the head of the queue (FIFO).
+element(): Retrieves, but does not remove, the element at the head of the queue.
+offer(E element): Adds an element to the queue, returns true if successful, false if the queue is full.
+poll(): Retrieves and removes the element at the head of the queue, returns null if the queue is empty.
+peek(): Retrieves, but does not remove, the element at the head of the queue, returns null if the queue is empty.
+size(): Returns the number of elements in the queue.
+isEmpty(): Checks if the queue is empty.
+clear(): Removes all elements from the queue.
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class QueueExample {
+    public static void main(String[] args) {
+        Queue<String> queue = new LinkedList<>();
+        queue.add("Apple");
+        queue.add("Banana");
+        queue.add("Orange");
+
+        System.out.println(queue.poll()); // Output: "Apple"
+        System.out.println(queue.size()); // Output: 2
+    }
+}
+
+
+Deque
+
+Interface: java.util.Deque
+Description: A double-ended queue that allows insertion and deletion at both ends. It can also be used as a stack (LIFO - Last-In-First-Out) or a queue (FIFO - First-In-First-Out).
+Common Implementations: ArrayDeque, LinkedList
+
+addFirst(E element): Adds an element to the front of the deque.
+addLast(E element): Adds an element to the end of the deque.
+removeFirst(): Removes and returns the element at the front of the deque.
+removeLast(): Removes and returns the element at the end of the deque.
+offerFirst(E element): Adds an element to the front of the deque, returns true if successful, false if the deque is full.
+offerLast(E element): Adds an element to the end of the deque, returns true if successful, false if the deque is full.
+peekFirst(): Retrieves, but does not remove, the element at the front of the deque, returns null if the deque is empty.
+peekLast(): Retrieves, but does not remove, the element at the end of the deque, returns null if the deque is empty.
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class DequeExample {
+    public static void main(String[] args) {
+        Deque<String> deque = new ArrayDeque<>();
+        deque.add("Apple");
+        deque.add("Banana");
+        deque.add("Orange");
+
+        System.out.println(deque.pop()); // Output: "Apple"
+        System.out.println(deque.size()); // Output: 2
+    }
+}
+
+==============================================================================================================================
+2. Map interface
+3. SOLID Principles
+4. Spring Boot
+5. Spring security
+6. Multithreading
+7. Design Patterns
+8. Data structures
