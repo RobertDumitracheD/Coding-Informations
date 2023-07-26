@@ -1,4 +1,23 @@
 TOPICS
+1.Streams
+2. Collections
+3. Map interface
+4. SOLID Principles
+5. Spring Boot
+6. Spring JPA - Hibernate
+7. Spring Web
+8. Spring security
+9. Multithreading
+11. Data structures
+12. Unit Tests
+13. Kubernetes
+14. Docker
+15. Mongo
+15. Rabit MQ
+17. GIT 
+
+
+
 1. Streams - reduce/flatmap
 
 In Java, streams are a powerful feature introduced in Java 8 as part of the java.util.stream package. S
@@ -225,7 +244,7 @@ public class DequeExample {
 }
 
 ==============================================================================================================================
-2. Map interface
+3. Map interface
 
 Map Interface:
 The Map interface in Java represents a collection that maps keys to values. Each key in the map is unique, and it is associated 
@@ -310,7 +329,7 @@ public class LinkedHashMapExample {
 
 
 
-3. SOLID Principles
+4. SOLID Principles
 
 The SOLID principles are a set of five design principles for writing maintainable and scalable object-oriented software. 
 Each principle focuses on specific aspects of software design to promote flexibility, maintainability, and modularity.
@@ -360,7 +379,7 @@ e.Dependency Inversion Principle (DIP):
 	
 ==============================================================================================================================
 	
-4. Spring Boot
+5. Spring Boot
 
 What is Spring Boot?
 
@@ -519,12 +538,12 @@ public class MyService {
 
 ==============================================================================================================================
 
-5. Spring JPA - Hibernate
+6. Spring JPA - Hibernate
 
 
 ==============================================================================================================================
 
-6. Spring Web
+7. Spring Web
 Spring Web Annotations:
 a. @Controller: This annotation is used to mark a class as a Spring MVC controller. It enables the class to handle incoming HTTP 
 requests and return responses to the client.
@@ -581,7 +600,7 @@ practices for handling resources.
 
 ==============================================================================================================================
 
-7. Spring security
+8. Spring security
 
 Spring Security is a powerful framework provided by the Spring ecosystem that focuses on providing security solutions for Java-based a
 pplications, particularly web applications. It helps developers implement authentication, authorization, and other security-related functionalities to safeguard their applications from unauthorized access and attacks. Below are some important annotations and information related to Spring Security as of my last update in September 2021:
@@ -813,7 +832,7 @@ PKCE significantly improves the security of OAuth 2.0 flows for public clients a
 
 
 ==============================================================================================================================
-8. Multithreading
+9. Multithreading
 
 Multithreading is a programming concept where multiple threads within a single process execute independently, sharing the same
  resources but running concurrently. Threads are the smallest units of execution that can be scheduled by the operating system's 
@@ -1021,7 +1040,7 @@ Use an iterator pattern to traverse and access elements of a collection without 
 
 
 ==============================================================================================================================
-10. Data structures
+11. Data structures
 
 
 Sure! Here are examples of how each data structure can be used in various scenarios:
@@ -1079,7 +1098,7 @@ These examples highlight the versatility of different data structures and their 
 Properly choosing and implementing the appropriate data structure is essential for optimizing the performance and efficiency of software solutions.
 
 ==============================================================================================================================
-11. Tests
+12. Tests
 
 Unit testing is a crucial aspect of developing Spring Boot applications to ensure that individual components and units of code work correctly 
 in isolation.
@@ -1286,7 +1305,7 @@ public class BookControllerTest {
 }
 
 ==============================================================================================================================
-12. Kubernetes
+13. Kubernetes
 
 
 Kubernetes is an open-source container orchestration platform developed by Google. It automates the deployment, scaling, and management 
@@ -1342,7 +1361,7 @@ Kubernetes has become a standard for container orchestration due to its flexibil
 the management of containerized applications, making it easier to deploy, update, and scale applications in a distributed environment.
 
 ==============================================================================================================================
-13. Docker
+14. Docker
 
 Docker is an open-source platform that automates the deployment, management, and scaling of applications inside containers. Containers 
 are lightweight, portable, and self-sufficient units that package an application along with its dependencies, runtime environment, 
@@ -1431,7 +1450,7 @@ In summary, Docker and Kubernetes complement each other in the containerization 
 
 
 ==============================================================================================================================
-14. Mongo
+15. Mongo
 
 MongoDB is a popular NoSQL database that uses a document-oriented data model, making it easy to store and retrieve complex data structures. A
 s a beginner, here are some key concepts and common queries you should learn to work with MongoDB effectively:
@@ -1697,3 +1716,100 @@ OpenShift is widely used in enterprise environments and cloud-native application
 ==============================================================================================================================
 
 
+17. GIT
+Git is a distributed version control system designed to track changes in source code and manage collaborative development workflows. It allows 
+multiple developers to work on the same project 
+simultaneously and facilitates the merging of code changes. Git is widely used in software development due to its efficiency, flexibility, and a
+bility to handle projects of any size. Here are some key concepts and features of Git:
+
+Repository:
+A repository (repo) is a collection of files and directories that make up a project. It contains the entire history of the project, including all past changes.
+
+Commit:
+A commit is a snapshot of changes made to the files in the repository. It records a specific set of changes, along with a unique identifier (SHA-1 hash) 
+and a commit message describing the changes.
+
+Branch:
+A branch is a separate line of development that allows developers to work on new features or bug fixes independently of the main codebase. Each branch represents 
+a different version of the code.
+
+Merge:
+Merging is the process of combining changes from one branch into another. It is used to integrate changes made in separate branches back into the main codebase.
+
+Pull Request:
+A pull request (PR) is a request to merge changes from one branch into another. It allows team members to review and discuss the proposed changes before they are merged.
+
+Remote Repository:
+A remote repository is a copy of the project hosted on a remote server, such as GitHub, GitLab, or Bitbucket. Developers can push changes to a remote repository 
+and collaborate with others.
+
+Clone:
+Cloning is the process of creating a local copy of a remote repository on your machine. It allows you to work on the project locally and synchronize changes with 
+the remote repository.
+
+Fetch:
+Fetching is the process of downloading changes from a remote repository to your local repository without automatically merging them. It updates your local repository's 
+knowledge of the remote branch but does not modify your working directory.
+
+Pull:
+Pulling is the process of fetching changes from a remote repository and automatically merging them into your local branch.
+
+Push:
+Pushing is the process of uploading local changes to a remote repository, making them available to other team members.
+
+Staging Area (Index):
+The staging area is a space in Git where changes are prepared before they are committed. It allows you to control which changes will be included in the next commit.
+
+Version Control System (VCS):
+Git is a distributed version control system, meaning that each developer has a complete copy of the entire project's history, enabling offline work and faster performance.
+
+Git is an essential tool for version control and collaborative software development. It provides an efficient way to manage code changes, track project history, and 
+collaborate with other developers in both small and large-scale projects.
+Initialize a Repository:
+git init - Initializes a new Git repository in the current directory.
+
+Configure User Details: - Sets up your name and email address to be used in commits.
+git config --global user.name "Your Name"
+git config --global user.email "your@example.com"
+
+Clone a Repository: Creates a copy of a remote repository on your local machine.
+git clone <repository_url>
+
+Stage Changes: Adds the specified file(s) to the staging area to be included in the next commit.
+git add <file_name> / git add . Adds all changes in the working directory to the staging area
+
+Commit Changes:Commits the staged changes with a descriptive commit message.
+git commit -m "Commit message"
+
+View Status:
+git status - Shows the current status of the repository, including changes and the branch status.
+
+View Commit History - Displays the commit history, showing the commit hashes, authors, dates, and commit messages.
+git log
+
+Create a Branch:
+git branch <branch_name> - Creates a new branch with the specified name.
+
+Switch Branch:
+git checkout <branch_name> - Switches to the specified branch.
+
+Merge Branch:
+git merge <branch_name>
+
+Pull Changes from Remote:
+git pull - Fetches changes from the remote repository and automatically merges them into the current branch.
+
+Push Changes to Remote:
+git push <remote_name> <branch_name> - Pushes the local changes to the remote repository on the specified branch.
+
+Create a New Remote:
+git remote add <remote_name> <repository_url>
+
+Fetch Changes from Remote:
+Fetches changes from the remote repository but does not automatically merge them.
+git fetch <remote_name>
+Remove Files:
+git rm <file_name>
+Removes the specified file from the working directory and staging area.
+git checkout -- <file_name>
+Discards changes in the specified file and reverts it to the last committed version.
