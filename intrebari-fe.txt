@@ -1,0 +1,56 @@
+ce este o componenta in angular
+ChatGPT
+În Angular, o componentă este un element esențial al arhitecturii aplicației, 
+reprezentând o parte din interfața utilizator și logica asociată acesteia. O componentă Angular este 
+o combinație de șablon (template), stiluri (CSS) și cod TypeScript care lucrează împreună pentru a defini 
+cum arată și se comportă o parte specifică a interfeței utilizator.
+
+
+ce este un modul in angular? 
+ChatGPT
+În Angular, un modul este o colecție logică de componente, servicii, directrive, ținte (pipes) și alte 
+resurse Angular, care sunt organizate împreună pentru a forma o unitate funcțională sau o funcționalitate 
+specifică a aplicației. Modulul oferă un context în care aceste elemente pot fi declarate, importate și 
+utilizate în aplicație.
+
+ce rol are AppModule? ce este routingul si ce rol are?
+ChatGPT
+AppModule este modulul rădăcină (root module) într-o aplicație Angular. Acesta este primul modul încărcat 
+de către aplicație și acționează ca punct de pornire principal al aplicației. Modulul rădăcină conține o 
+referință la componenta principală a aplicației (de obicei denumită AppComponent) și definește setările 
+globale și configurările necesare pentru funcționarea aplicației. În plus, AppModule poate importa și 
+include alte module necesare pentru aplicație.
+
+În ceea ce privește "routingul" în Angular, acesta se referă la procesul de gestionare a navigării între 
+diferitele pagini sau vederi ale aplicației. Angular oferă un modul numit RouterModule care facilitează 
+gestionarea navigării prin intermediul rutelor (routes).
+
+ce este un service in angular?
+ChatGPT
+În Angular, un service este o clasă TypeScript care furnizează funcționalitate comună și logica împărțită 
+între diferite componente din aplicație. Un service are rolul de a separa logica de afaceri de componentele
+ specifice și de a oferi o modalitate centralizată de gestionare a datelor și comunicare între componente.
+ Un serviciu Angular este o clasă decorată cu decoratorul @Injectable(), care permite Angular să îl injecteze 
+ în componente și alte servicii folosind sistemul său de injecție de dependențe.
+ 
+ care este diferenta dintre splice si slice?
+ChatGPT
+splice și slice sunt două metode utilizate pe șiruri (arrays) în limbajul JavaScript pentru a efectua operații 
+asupra elementelor acestora. Cu toate că sună similar și au nume asemănătoare, ele au funcționalități și efecte complet diferite.
+
+splice:
+
+splice este o metodă a unui șir (array) care poate fi folosită pentru a modifica conținutul șirului original, 
+adăugând, eliminând sau înlocuind elemente.
+Metoda splice modifică șirul original și returnează o nouă matrice care conține elementele eliminate (dacă există).
+Sintaxa: array.splice(start, deleteCount, item1, item2, ...)
+start: Indexul la care începe modificarea șirului.
+deleteCount: Numărul de elemente care trebuie eliminate de la indexul start. Dacă este 0, nu se elimină niciun element.
+slice:
+
+slice este o metodă a unui șir (array) care creează o copie nouă a unei porțiuni din șir, fără a modifica șirul original.
+Metoda slice returnează o copie nouă a elementelor selectate din șir.
+Sintaxa: array.slice(start, end)
+start: Indexul la care începe selecția elementelor.
+end: Indexul (neinclusiv) la care se termină selecția elementelor. Dacă acest parametru lipsește, se vor selecta elementele
+ de la start până la sfârșitul șirului.

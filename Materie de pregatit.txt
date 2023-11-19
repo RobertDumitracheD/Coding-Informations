@@ -17,7 +17,9 @@ TOPICS
 15. Rabit MQ
 17. GIT
 18. Microservices
-19 Spring Cloud 
+19. Spring Cloud 
+20. Linux commands - to be implemented
+21. Angular - to be implemented
 
 
 
@@ -187,7 +189,8 @@ public class SetExample {
 Queue
 
 Interface: java.util.Queue
-Description: A collection designed for holding elements before processing. It follows the FIFO (First-In-First-Out) order, but some implementations (e.g., PriorityQueue) may have different behavior based on element priority.
+Description: A collection designed for holding elements before processing. It follows the FIFO (First-In-First-Out) order, but some implementations 
+(e.g., PriorityQueue) may have different behavior based on element priority.
 Common Implementations: LinkedList, PriorityQueue
 
 add(E element): Adds an element to the queue.
@@ -219,7 +222,8 @@ public class QueueExample {
 Deque
 
 Interface: java.util.Deque
-Description: A double-ended queue that allows insertion and deletion at both ends. It can also be used as a stack (LIFO - Last-In-First-Out) or a queue (FIFO - First-In-First-Out).
+Description: A double-ended queue that allows insertion and deletion at both ends. It can also be used as a stack (LIFO - Last-In-First-Out)
+ or a queue (FIFO - First-In-First-Out).
 Common Implementations: ArrayDeque, LinkedList
 
 addFirst(E element): Adds an element to the front of the deque.
@@ -269,7 +273,8 @@ values(): Returns a collection of all the values in the map.
 entrySet(): Returns a set of key-value pairs (Map.Entry) in the map.
 
 HashMap:
-Description: A hash table-based implementation of the Map interface. It provides constant-time average complexity for basic operations (put, get, remove).
+Description: A hash table-based implementation of the Map interface. It provides constant-time average complexity for basic operations 
+(put, get, remove).
 Important Details: Elements in a HashMap are not ordered.
 Example:
 import java.util.HashMap;
@@ -538,6 +543,21 @@ public class MyService {
 
     // Rest of the service logic
 }
+
+@Bean is used at the method level within a configuration class annotated with @Configuration.
+It explicitly declares a bean definition and instructs Spring to instantiate and manage the bean returned by the method.
+It allows you to manually define the configuration of a bean, giving you full control over its instantiation and dependencies.
+It is often used when you need to configure a third-party library or a class that you don't have direct control over (e.g., from external
+ libraries or legacy code).
+The method annotated with @Bean can have a custom name (if not specified, the method name is used as the bean name) and can be used to 
+define prototype-scoped beans as well.
+
+@Component is used at the class level to indicate that a class is a Spring bean.
+It is a generic stereotype annotation for any Spring-managed component, and it allows Spring to auto-detect and 
+create instances of the annotated class during component scanning.
+It is typically used for domain objects, service classes, data access objects (DAOs), and other general Spring-managed beans.
+When Spring scans the classpath, it detects classes annotated with @Component and automatically registers them as beans in the application context.
+The bean name is generated based on the class name with the first letter converted to lowercase (e.g., MyClass → myClass).
 
 ==============================================================================================================================
 
@@ -847,7 +867,9 @@ Here's an overview of key aspects of multithreading:
 1 / 2
 
 Multithreading is a programming concept where multiple threads within a single process execute independently, 
-sharing the same resources but running concurrently. Threads are the smallest units of execution that can be scheduled by the operating system's thread scheduler. Multithreading is commonly used to achieve concurrent execution, improve performance, and utilize modern multi-core processors efficiently. Here's an overview of key aspects of multithreading:
+sharing the same resources but running concurrently. Threads are the smallest units of execution that can be scheduled by the o
+perating system's thread scheduler. Multithreading is commonly used to achieve concurrent execution, improve performance, 
+and utilize modern multi-core processors efficiently. Here's an overview of key aspects of multithreading:
 
 Threads vs. Processes:
 
@@ -892,6 +914,7 @@ class MyThread extends Thread {
 
 MyThread thread = new MyThread();
 thread.start(); // Starts the thread, invoking the run() method.
+
 class MyRunnable implements Runnable {
     public void run() {
         // Thread logic here
@@ -1958,6 +1981,8 @@ Disadvantages of Synchronous Communication:
 Performance impact: If the called service takes a long time to respond, it can lead to increased response times and potential bottlenecks.
 Scalability challenges: Synchronous calls may limit the scalability of the system, as the client's performance depends on the slowest service 
 it interacts with.
+
+
 Asynchronous Communication:
 In asynchronous communication, a client sends a request to another microservice, but instead of waiting for a direct response, it continues
  with its execution immediately. The called service processes the request independently and sends the response back to the client at a later time.

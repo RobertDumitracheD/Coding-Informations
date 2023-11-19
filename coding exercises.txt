@@ -1,0 +1,86 @@
+1. Longest palindrome    
+	
+    static int maxLen = 0;
+    static int lo = 0;
+    public static String longestPalindrome2(String s) {
+        char[] input = s.toCharArray();
+        if(s.length() < 2) {
+            return s;
+        }
+
+        for(int i = 0; i<input.length; i++) {
+            expandPalindrome(input, i, i);
+            expandPalindrome(input, i, i+1);
+        }
+        return s.substring(lo, lo+maxLen);
+    }
+
+    public static void expandPalindrome(char[] s, int j, int k) {
+        while(j >= 0 && k < s.length && s[j] == s[k]) {
+            j--;
+            k++;
+        }
+        if(maxLen < k - j - 1) {
+            maxLen = k - j - 1;
+            lo = j+1;
+        }
+    }
+===================================================================================================================================
+Pairs that complain to b=a+k;
+
+ public static int countPairs(List<Integer> numbers, int k) {
+        //pereche(a,b)
+        //numara perechile distince de int pentru care a+ k = b
+        //(a,b) si (c,d) sunt distincte daca 1 element din (a,b) nu este inclus in c,d
+        // 1,1,1,2,3
+        Set<String> validPairs = new HashSet<>();
+        Set<Integer> seen = new HashSet<>();
+        for(int num : numbers) {
+            if(seen.contains(k+num) && seen.contains(k-num)){
+//                if(!seen.contains(num))
+                validPairs.add(num + "" + k+num);
+            }
+            seen.add(num);
+        }
+
+
+        // 6,1,2,3,4,5,6,2
+        // b = a+k
+
+//        for(int i=0;i< numbers.size();i++) {
+//            int a = numbers.get(i);
+//            int b = a+k;
+//            for(int j=0;j<numbers.size();j++) {
+//                if(numbers.get(j) == b) {
+//                    String pair = a + " " +b;
+//                    validPairs.add(pair);
+//                    break;
+//                }
+//            }
+//        }
+        return validPairs.size();
+
+    }
+
+
+===================================================================================================================================
+Length of longest increasing sequence
+
+    public static int findLengthOfLCIS(int[] nums) {
+        //1,3,5,4,7
+       int maxLength = 0;
+       int currentLength = 1;
+        for(int i=1;i<nums.length-1;i++){
+            if(nums[i] > nums[i-1]){
+                currentLength++;
+            } else{
+                maxLength = Math.max(maxLength, currentLength);
+                currentLength = 1;
+            }
+        }
+        maxLength = Math.max(maxLength, currentLength);
+        return maxLength;
+    }
+
+
+===================================================================================================================================
