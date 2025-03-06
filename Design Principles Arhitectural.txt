@@ -317,7 +317,7 @@ B. Structural Patterns (object composition)
 6. Proxy - Controls access to another object.
 7. Flyweight - Minimizes memory usage by sharing data.
 
-C. Behavioral Patterns (object interaction)
+C. Behavioral Patterns (object interaction)fz
 
 1. Observer - Notifies objects when a subject changes state.
 2. Strategy - Selects algorithms at runtime.
