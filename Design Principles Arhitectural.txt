@@ -1,0 +1,1127 @@
+Design Principles & Arhitectural
+
+System Design questions =========================================
+
+What is a microservice arhitecture and what are the advantages and drawbacks?
+
+
+What is a load balancer? 
+A load balancer is acting as a gate in front of our services that routes the request to the available node with least amount of load. 
+Algorithms 
+	Round-Robin 123 123 123 and repeat
+	Geo-based assigned to each region an user is routed to that instance(low response time, 			drowbacks-> doesn't help with load balancing too much)
+	Least connections (note down and nr of connections and connect to least connection 	machine)
+
+What is a DNS?
+It's a service that maps a domain name to an ip address
+
+What is a Proxy?
+Acts as a  middleman to protect your identity through the internet?
+
+What is reverse proxy?
+Acts as a middleman to protect a private network of servers from internet
+
+What is vertical Scaling ? Horizontal scalling?
+vertical scaling -> bigger server
+horizontal scaling -> multiple servers -> more fault tollerant, distribute the workload to multiple machines
+
+How to scale the database?
+Indexing -> is a way of going directly to the data needed, without searching in the entire table, we should index only the most accessed columns because it slows down writing
+
+Replication -> Primary replicas -> write to the other replicas -> each replica can be called by calls using load balancer -> what is used for?
+
+Sharding -> divide database in multiple shards, data is distributed based on a sharding key, reducing load, improves write and read performance since data is loaded across multiple shards. HORIZONTAL PARTITIONING
+
+VERTICAL PARTITIONING -> splitting a huge table into small tables to reduce unnecesary disk i/o, scanning only relevant columns
+
+Denormalization -> reduces the number of joins by combining related data into a single table (used in read-heavy application)
+
+Distributed systems Cap theorem -> consistency availability partition tolerance -> cannot be achieved all in the same time
+
+Where you can store large files ? -> Blob storage like AWS S3, get's an unique url that can be used
+
+What is a CDN?
+Content delivery network -> a global network of distributed servers that work together to deliver content.
+
+What is cdn cache?
+A CDN cache refers to the content delivery network (CDN) storing copies of content—such as images, videos, stylesheets, scripts, or even entire web pages—closer to users to reduce latency and server load.
+You run a website hosted in New York. A user in Tokyo visits your site.
+	Without a CDN: The user in Tokyo loads the site directly from New York—slow and possibly inefficient.
+	With a CDN: A CDN server in Japan already has a cached version of your site’s static content. The user accesses that local copy—		much faster.Faster loading times,Reduced origin server load,Better scalability,Improved user experience globally
+    
+What is caching?
+Storing frequently access data in memory
+Cache aside patterns -> application looks for the cache if it has it retrieves directly, if not it calls the db. To prevent outDated value for being served use TTL
+
+What are microservices?
+Each microservice handles a single responsability.has its own logic and can scale independently, loosly coupled
+
+What are SOLID principles?
+Single responsability => it should have one and only one responsability and reason to change
+Open closed principle => open for extension closed for modification => A parent interface is implemented by multiple classes, if we want to add another implementation we just need to implement again.
+Liskov Substitution => Child classes must be replaceable by their base classes 
+
+What are message queues?
+Is a way of communicating asynchronously without blocking other operations,
+Producer -> produces a message in a queue that temporaly holds the message and the consumer retrieves the message and process it.
+More information?!
+
+
+what are distributed systems?
+Distributed systems are a type of computing system in which multiple independent computers (nodes) work together to appear as a single coherent system to the user.
+Scalability – Add more machines to handle more users or data
+
+Fault tolerance – One machine failing doesn’t crash the whole system
+
+Resource sharing – Different systems can share computing power, storage, etc.
+
+Geographical distribution – Useful for global services
+
+What are distributed messaging systems ? Apache kafka?
+	A distributed messaging system is a software system designed to send and receive messages between different parts of a distributed system, reliably and at scale. These systems decouple producers (senders of data) from consumers (receivers of data), improving scalability, fault tolerance, and real-time data flow across services or applications.
+	Log aggregation
+	Real-time analytics
+	Event-driven architecture
+	Data pipelines
+	IoT data streaming
+	Microservices communication
+	Apache Kafka is a high-throughput, distributed messaging system developed by LinkedIn and now part of the Apache Software 	Foundation. It's one of the most widely used messaging platforms today.
+
+what is reliability and availability?
+✅ Availability (Is it working now?)
+
+    Definition: The percentage of time a system is operational and accessible when needed.
+Reliability (Does it work correctly over time?)
+
+    Definition: The system’s ability to consistently perform its intended function without failures over time.
+    
+what is the efficiency? Latency? Throughtput?
+⚡ Efficiency
+
+    Efficiency is how well a system uses resources (like CPU, memory, time, energy) to perform a task.
+what is cap theorem?
+Latency is the time delay between a request and the corresponding response.
+Types:
+    Network latency: Time for data to travel across a network.
+    Disk latency: Time to read/write to disk.
+    Application latency: Time to respond to a user request.
+ Throughput
+    Throughput is the amount of work done or data processed per unit time.
+
+    Usually measured in:
+        Requests per second (RPS)
+        Transactions per second (TPS)
+        MB/s or GB/s (for data)    
+        
+What is Rate limiting?
+Is adding restrictions of number requests per time unit, if the limit is exceeded servers blocks requests
+
+What is APi GATEWAY?
+It provides Authentication, rate limiting, logging, monitoring, request routing
+
+What is Idempotency?
+Multiple requests produce the same result. Each request has assigned a unique id. server checks if that id has already been handled before processing again a failed request
+
+what is cloud? what is aws? what are the components of aws?
+Cloud computing is the delivery of computing services—like servers, storage, databases, networking, software, and more—over the internet ("the cloud") rather than on local computers or servers.
+EC2 (Elastic Compute Cloud) – Virtual servers in the cloud
+Lambda – Serverless computing (run code without managing servers)
+ECS / EKS – Containers (Docker) and Kubernetes orchestration
+S3 (Simple Storage Service) – Object storage for files, backups, media
+EBS (Elastic Block Store) – Disk storage for EC2
+Glacier – Long-term archival storage
+RDS – Managed relational databases (MySQL, PostgreSQL, etc.)
+DynamoDB – NoSQL key-value store
+Aurora – High-performance MySQL/PostgreSQL-compatible engine
+VPC (Virtual Private Cloud) – Isolated network for your AWS resources
+Route 53 – DNS and domain management
+API Gateway – Manage and expose APIs securely
+🔒 5. Security & Identity
+    IAM (Identity and Access Management) – User and permission control
+    KMS (Key Management Service) – Encryption key management
+    Cognito – User sign-up/login and authentication
+📈 6. Monitoring & Analytics
+    CloudWatch – Logs, metrics, and alerts
+    CloudTrail – Tracks user activity and API usage
+    Athena – Query S3 data using SQL
+    
+what is a design pattern? what kind of patterns you know? where is it used?
+A design pattern is a reusable, proven solution to a common software design problem.
+A. Creational Patterns (object creation)
+
+1. Singleton - Ensures a class has only one instance and provides a global point of access.
+2. Factory Method - Creates objects without specifying the exact class.
+3. Abstract Factory - Creates families of related or dependent objects.
+4. Builder - Separates object construction from its representation.
+5. Prototype - Creates new objects by copying existing ones.
+
+B. Structural Patterns (object composition)
+
+1. Adapter - Makes incompatible interfaces compatible.
+2. Bridge - Separates an object’s abstraction from its implementation.
+3. Composite - Treats groups of objects the same as individual ones.
+4. Decorator - Dynamically adds behavior to objects.
+5. Facade - Provides a simplified interface to a complex subsystem.
+6. Proxy - Controls access to another object.
+7. Flyweight - Minimizes memory usage by sharing data.
+
+C. Behavioral Patterns (object interaction)
+
+1. Observer - Notifies objects when a subject changes state.
+2. Strategy - Selects algorithms at runtime.
+3. Command - Encapsulates a request as an object.
+4. Chain of Responsibility - Passes request along a chain of handlers.
+5. Mediator - Centralizes communication between components.
+6. Memento - Saves and restores object state without violating encapsulation.
+7. State - Changes object behavior based on internal state.
+8. Template Method - Defines a skeleton of an algorithm in a method.
+9. Iterator - Provides sequential access to elements in a collection.
+10. Visitor - Adds new operations to objects without changing them.
+
+explain some projects that you worked on, what did you use?
+
+What is single point of failure in distributed systems?
+A **Single Point of Failure (SPOF)** is any **individual component** in a system whose failure would cause the **entire system or service to stop working**.
+
+What are SLO's and SLA's?
+
+These are key terms used in service reliability and performance management, especially in cloud services and distributed systems.
+
+--------------------------------------------------
+1. SLA – Service Level Agreement
+--------------------------------------------------
+
+Definition:
+An **SLA (Service Level Agreement)** is a formal, legally binding **contract** between a service provider and a customer that defines **expected service levels**.
+
+Key Features:
+- Defines specific metrics (e.g., uptime, response time)
+- Specifies penalties for failure (e.g., service credits, refunds)
+- Used in commercial relationships (e.g., AWS, Azure, etc.)
+
+2. SLO – Service Level Objective
+--------------------------------------------------
+
+Definition:
+An **SLO (Service Level Objective)** is a specific **internal target** or goal for a service's performance or reliability.
+
+Key Features:
+- Not a contract, but an **internal commitment**
+- Used by engineers/SREs to guide system performance
+- Helps measure whether a service is operating reliably
+
+What is an anti-pattern?
+
+Advanced knowledge questions =======================================================
+
+What is latency?
+Is the time that a server responds to client. How to make it faster? Deploy datacenters to multiple regions
+
+What HTTP/HTTPS is?
+Is a protocol with the help that client communicates with servers (HTTPS uses TLS or SSL in such a way that even if the request is intercepted the atacker cannot access the request data). HTTP protocol doesn t define how request should be structured, what is the format of resonse or how client should interact with server.
+
+What is APIS
+Application programming interface is a set of rules that define how client and server needs to communicate-> API STYLES REST, GRAPHQL ,SOAP
+
+What is REST?
+REST is an architectural style for designing networked applications, particularly web services, that aims for simplicity, scalability, and statelessness. Systems that follow the REST paradigm are stateless, meaning that the server does not need to know anything about what state the client is in and vice versa. In this way, both the server and the client can understand any message received, even without seeing previous messages. This constraint of statelessness is enforced through the use of resources, rather than commands. Resources are the nouns of the Web - they describe any object, document, or thing that you may need to store or send to other services.
+Uses JSON
+
+What is SOAP?
+Is a communication that is based on XML, highly used on payment services. complex and verbose
+
+What is gRPC?
+High performance, it uses binary encoding, favor for microservices communication, most used for communication server to server
+
+HTTP Verbs
+
+There are 4 basic HTTP verbs we use in requests to interact with resources in a REST system:
+
+    GET — retrieve a specific resource (by id) or a collection of resources
+    POST — create a new resource
+    PUT — update a specific resource (by id)
+    DELETE — remove a specific resource by id
+
+What is GRAPHQL?
+Different than REST it returns only data that is needed, can get the data from multiple endpoints but requires more computing power.
+
+What are Websockets?
+continuuous 2 way communication, server can call also notify the client. Used for real time communication 
+
+What is a database?
+Is a server that ensure data storage, retrievaal and efficient management while keeping it secure, consistent and durable
+ 
+WebHooks ? 
+A server can send an http request to another server when an event occurs
+
+What is relational database ?
+Ex sql -> Predefined schema, respects ACID(
+    ATOMICITY->commit all or nothing,
+ CONSISTENCY-> stops invalid data from messing up the db (respects the constraints),
+  ISOLATION -> concurrent transactions are isolated from each other, 
+ DURABILITY-> data is persisted after transaction is commited even in system failure) proerpties, strong consistency, structured relationships
+NonRelational
+NOSQL -> high scalability, performance, flexible schema
+
+Which and when to use? 
+If needed relational data, strong consistency go for SQL
+Banking system	Wells Fargo’s account DB	Need ACID transactions to ensure accurate balances and transfers.
+E-commerce backend	Amazon's order & inventory system	Orders, products, customers, and invoices have strict relationships and constraints.
+Hospital records	Electronic Health Records (EHR)	Patient data must be consistent and reliable with relational links (e.g., diagnoses, meds).
+Flight booking systems	Airline reservation platforms (e.g. Delta, Lufthansa)	
+High scalability + flexible schema -> NOSQL
+Social media app	Instagram, TikTok user feed
+Real-time analytics	Uber's ride data tracking
+
+
+Basic Knowledge questions ==========================================================
+
+Overloading?
+Overloading is when multiple methods in the same class have the same name but different parameters (different type, number, or order).
+
+Key points:
+- Happens within the same class.
+- Method name is the same but parameter lists differ.
+- Return type can be the same or different.
+- Used to increase the readability of the program.
+
+Overrinding ?
+Overriding is when a subclass provides a specific implementation for a method that is already defined in its superclass.
+
+Key points:
+- Happens between superclass and subclass.
+- Method name, return type, and parameters must be the same.
+- Enables runtime polymorphism (dynamic method dispatch).
+- Allows a subclass to modify behavior of the superclass method.
+
+1. What is method overloading? How is it different from method overriding?
+
+Method overloading is defining multiple methods in the same class with the same name but different parameter lists (different type, number, or order of parameters). It is resolved at compile time (compile-time polymorphism).
+
+Method overriding is when a subclass provides a specific implementation of a method that is already defined in its superclass, with the same method signature. It is resolved at runtime (runtime polymorphism).
+
+Key difference:
+- Overloading: same class, different parameters.
+- Overriding: subclass modifies superclass method, same parameters.
+
+---
+
+2. Can constructors be overloaded? Can they be overridden?
+
+Constructors can be overloaded by defining multiple constructors with different parameter lists in the same class.
+
+Constructors cannot be overridden because they are not inherited by subclasses.
+
+---
+
+3. What are the benefits of method overriding?
+
+- Allows runtime polymorphism, enabling dynamic method dispatch.
+- Enables a subclass to provide a specific behavior different from the superclass.
+- Supports extensibility and flexibility in code.
+- Helps implement interfaces and abstract classes.
+- Improves code reusability and maintainability.
+
+---
+
+4. What is compile-time polymorphism? What is runtime polymorphism?
+
+Compile-time polymorphism is method overloading and operator overloading where the method to invoke is determined during compilation.
+
+Runtime polymorphism is method overriding where the method to invoke is determined during program execution (runtime), depending on the object type.
+
+---
+
+5. Can you override a static method? Why or why not?
+
+No, static methods cannot be overridden because they belong to the class, not instances. If you declare a static method with the same signature in a subclass, it hides the superclass method (method hiding), not overrides it.
+
+---
+
+6. What happens if the return type differs in overriding?
+
+In overriding, the return type must be the same or a subtype (covariant return type) of the return type in the superclass method.
+
+If the return types are incompatible, the code will not compile.
+
+---
+
+7. Can private methods be overridden?
+
+No, private methods cannot be overridden because they are not visible to subclasses (they are class-private). If a subclass declares a method with the same signature, it is treated as a new method (method hiding), not overriding.
+
+
+
+Interface ?
+
+An interface is a programming construct that defines a **contract** in the form of method signatures without implementing them. It specifies **what methods a class must implement**, but not how.
+
+Common Interview Questions and Answers about Interfaces:
+
+1. What is the difference between an abstract class and an interface?
+
+- Abstract class can have both abstract and concrete methods; interfaces mostly have abstract methods (except default and static methods in Java 8+).
+- A class can implement multiple interfaces but can extend only one abstract class.
+- Abstract classes can have constructors and maintain state (fields); interfaces usually cannot (though they can have constants).
+
+2. Can interfaces have fields or variables?
+
+- Interfaces can have constants (static final fields), but cannot have instance variables.
+- All fields in interfaces are implicitly public, static, and final.
+
+3. Can you instantiate an interface?
+
+- No, you cannot instantiate an interface directly because it contains abstract methods without implementation.
+
+4. What is multiple inheritance in terms of interfaces?
+
+- Since many languages (like Java) do not support multiple inheritance of classes, interfaces provide a way to achieve multiple inheritance of type.
+- A class can implement multiple interfaces, inheriting behavior contracts from all.
+
+5. Can interfaces have default methods?
+
+- In Java 8 and above, interfaces can have default methods with a method body.
+- This helps add new methods to interfaces without breaking existing implementations.
+
+6. How are interfaces used in real-world applications?
+
+- To define APIs and contracts between modules.
+- To enable polymorphism and loose coupling.
+- To implement callbacks, event listeners, and plug-in architectures.
+
+7. What happens if a class implements two interfaces that have methods with the same signature?
+
+- The class must provide one implementation that satisfies both interfaces.
+- If interfaces have default methods with the same signature, the class must override and resolve the conflict.
+
+Classes ?
+A class is a blueprint or template for creating objects in object-oriented programming. It defines the data (fields or attributes) and behaviors (methods or functions) that the created objects (instances) will have.
+ What is the difference between a class and an object?
+
+- A class is a blueprint or template defining the properties and behaviors.
+- An object is an instance of a class with actual values.
+
+2. What is a constructor? Can a class have multiple constructors?
+
+- A constructor is a special method used to initialize objects.
+- Yes, a class can have multiple constructors with different parameter lists (constructor overloading).
+
+3. What is the difference between instance variables and class variables?
+
+- Instance variables belong to individual objects.
+- Class variables (static variables) belong to the class and are shared among all instances.
+
+4. What are access modifiers? Name some commonly used ones.
+
+- Access modifiers control the visibility of class members.
+- Common modifiers: public, private, protected, and default (package-private in Java).
+
+5. What is encapsulation?
+
+- Encapsulation is the practice of hiding internal data and requiring all interaction to be performed through methods.
+- Achieved by using private fields and public getter/setter methods.
+
+6. Can a class inherit from multiple classes?
+
+- In most languages like Java, a class cannot inherit from multiple classes (no multiple inheritance).
+- However, it can implement multiple interfaces.
+
+7. What is the difference between method overloading and method overriding in the context of classes?
+
+- Overloading: same class, same method name, different parameters.
+- Overriding: subclass modifies a superclass method with the same signature.
+
+8. What is a static method? How is it different from an instance method?
+
+- Static methods belong to the class, not instances.
+- They can be called without creating an object.
+- Instance methods belong to objects and require an instance to be called.
+
+Heap & stack memory?
+
+Types of Memory: Heap and Stack
+
+1. Stack Memory:
+
+- The stack is a region of memory that stores **local variables, method/function call information (call frames/activation records), and control flow data**.
+- It operates in a Last In, First Out (LIFO) manner.
+- Memory allocation and deallocation are fast and automatic when methods are called and return.
+- Each thread has its own stack.
+- Variables stored: Primitive local variables, references to objects.
+- Size is limited and usually smaller than heap.
+- Example: When a method is invoked, its local variables and parameters are stored on the stack.
+
+2. Heap Memory:
+
+- The heap is a region of memory used for **dynamic memory allocation**, storing objects and data created at runtime.
+- Memory allocation/deallocation is managed by the programmer or automatically via garbage collection (in languages like Java, C#).
+- Shared across threads.
+- Variables stored: Objects, arrays, and their instance variables.
+- Typically larger than stack and slower to allocate.
+- Objects created with `new` keyword (Java, C++) are stored here.
+
+---
+
+Summary Table:
+
+| Memory Type | What is stored                  | Lifetime                     | Size         | Managed by       |
+|-------------|--------------------------------|------------------------------|--------------|------------------|
+| Stack       | Local variables, function calls | Until method returns          | Smaller      | Automatically    |
+| Heap        | Objects, dynamic data            | Until garbage collected/free  | Larger       | Programmer/Garbage Collector |
+
+---
+
+Common Interview Questions and Answers:
+
+1. What is the difference between stack and heap memory?
+
+- Stack stores local variables and method call info, managed automatically in LIFO order.
+- Heap stores objects and dynamic data, managed via garbage collection or manual memory management.
+
+2. Which memory is faster to access, stack or heap?
+
+- Stack memory is faster due to its LIFO nature and contiguous allocation.
+- Heap memory is slower because of dynamic allocation and fragmentation.
+
+3. What happens if stack memory is full?
+
+- A StackOverflowError (in Java) or stack overflow occurs, usually due to deep or infinite recursion.
+
+4. Can primitive data types be stored in heap memory?
+
+- No, primitives declared as local variables are stored in stack.
+- If primitives are part of objects, those objects live on the heap.
+
+5. How is memory allocated in the heap?
+
+- Memory is allocated dynamically when objects are created.
+- Managed manually (C/C++) or by garbage collectors (Java, C#).
+
+6. What is garbage collection?
+
+- Automatic process that frees heap memory occupied by objects no longer referenced.
+
+7. Does each thread have its own heap or stack?
+
+- Each thread has its own stack.
+- Heap is shared among all threads.
+
+---
+
+Exceptions Errors ? ? 
+
+- An exception is an event that disrupts the normal flow of a program during execution.
+- Exceptions represent conditions that a program might want to catch and handle to continue running.
+- Example: 
+  - `NullPointerException` (accessing a null reference)
+  - `IOException` (failure in input/output operations)
+- In Java, exceptions are subclasses of `java.lang.Exception`.
+- In Kotlin, exceptions are also subclasses of `Throwable`, but there is no checked exception mechanism.
+
+What is an Error?
+
+- An error is a serious problem that a program generally cannot handle or recover from.
+- Errors represent system-level issues such as JVM failures or hardware problems.
+- Examples:
+  - `OutOfMemoryError` (JVM runs out of memory)
+  - `StackOverflowError` (too deep recursion)
+- In Java and Kotlin, errors are subclasses of `java.lang.Error`.
+- Errors are usually not caught by programs and should be allowed to propagate.
+
+Difference Between Checked and Unchecked Exceptions
+
+Checked Exceptions:
+- Must be either caught in a try-catch block or declared in the method signature using `throws` (Java only).
+- Represent recoverable conditions.
+- Example: `IOException`, `SQLException`.
+- In Kotlin, checked exceptions do not exist.
+
+Unchecked Exceptions:
+- Also called runtime exceptions.
+- Do not require explicit handling or declaration.
+- Usually indicate programming errors or logic mistakes.
+- Subclasses of `RuntimeException` in Java.
+- Examples: `NullPointerException`, `IllegalArgumentException`, `ArrayIndexOutOfBoundsException`.
+
+Mutable Immutable classes
+1. Mutable Classes:
+
+- Objects whose state (fields/data) can be changed after creation.
+- Fields can be modified via setters or direct access.
+- Examples: Java’s `ArrayList`, Kotlin’s `MutableList`.
+- Use cases: When you need to update object data frequently.
+- Requires careful handling in multithreaded environments to avoid concurrency issues.
+2. Immutable Classes:
+- Objects whose state cannot be changed once created.
+- No setters; all fields are final or read-only.
+- Thread-safe by default because state can’t change.
+- Examples: Java’s `String`, Kotlin’s `String` and `List` (by default).
+- Benefits: Simplifies reasoning about code, safer in concurrency.
+final class Person {
+    private final String name;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+1. What is the difference between mutable and immutable objects?
+
+- Mutable objects can have their state changed after creation; immutable objects cannot.
+
+2. Why use immutable classes?
+
+- They are inherently thread-safe.
+- Easier to reason about and less error-prone.
+- Useful in functional programming styles.
+
+3. How do you make a class immutable in Java?
+
+- Declare class as final (optional but recommended).
+- Make all fields private and final.
+- Do not provide setters.
+- Initialize all fields via constructor.
+- Ensure mutable fields are not exposed (defensive copies).
+
+4. Can immutable objects contain mutable objects?
+
+- If they do, make defensive copies to preserve immutability.
+- Otherwise, immutability can be broken through those mutable objects.
+
+5. How does Kotlin support immutability?
+
+- Kotlin distinguishes between read-only (`List`) and mutable (`MutableList`) collections.
+- Data classes with `val` properties are immutable by default.
+
+Data structures?
+- Data structures are ways of organizing and storing data so that it can be accessed and modified efficiently.
+- Different data structures are suited for different kinds of applications, depending on the operations needed (e.g., search, insert, delete).
+- Common data structures include arrays, linked lists, stacks, queues, trees, graphs, hash tables, etc.
+
+Data Structures and How They Work Internally
+
+1. Array:
+- Fixed-size contiguous block of memory storing elements.
+- Access by index is direct and fast (O(1)) because elements are placed sequentially.
+- Insertion/deletion in middle requires shifting elements (O(n)).
+
+2. ArrayList (Dynamic Array):
+- Internally uses an array.
+- When full, creates a new larger array and copies elements (amortized resizing).
+- Allows dynamic resizing while providing fast random access (O(1)).
+- Adding elements at the end is generally O(1), except when resizing occurs.
+
+3. Linked List:
+- Consists of nodes where each node stores data and a reference to the next node.
+- No contiguous memory; nodes can be scattered in memory.
+- Insertions and deletions are fast (O(1)) if node reference is known.
+- Access by index requires traversal (O(n)).
+
+4. Stack:
+- Can be implemented using an array or linked list.
+- Operates LIFO: elements are pushed/popped from the top.
+- Operations are O(1).
+
+5. Queue:
+- Can be implemented using an array (circular buffer) or linked list.
+- Operates FIFO: elements are added at the rear and removed from the front.
+- Operations are O(1).
+
+6. Tree (e.g., Binary Search Tree):
+- Hierarchical nodes with parent-child relationships.
+- Each node holds references to its children.
+- Balanced trees keep height low, ensuring O(log n) search/insert/delete.
+- Unbalanced trees degrade to linked list performance (O(n)).
+
+7. Hash Table (HashMap):
+- Uses a hash function to convert keys into array indices.
+- Handles collisions using chaining (linked lists at buckets) or probing.
+- Average operations (search/insert/delete) are O(1).
+- Performance depends on hash function quality and load factor.
+
+---
+
+Common Interview Questions and Answers:
+
+1. How does an ArrayList manage dynamic resizing?
+
+- It maintains an internal array.
+- When capacity is reached, it creates a new larger array (usually 1.5 to 2 times bigger) and copies elements.
+- This resizing happens infrequently, so average insertion at end is O(1).
+
+2. What is the main advantage of a linked list over an array?
+
+- Efficient insertions and deletions at any position without shifting elements.
+- But slower access by index because it requires traversal.
+
+3. How does a hash table handle collisions?
+
+- By using separate chaining (linked lists or trees in buckets).
+- Or open addressing (linear/quadratic probing) to find another free slot.
+
+4. What is the time complexity of accessing an element in an ArrayList?
+
+- O(1), because of direct index access to the underlying array.
+
+5. What is the difference between stack and queue?
+
+- Stack is LIFO (last in, first out).
+- Queue is FIFO (first in, first out).
+
+6. Why is balancing important in binary search trees?
+
+- To keep operations efficient (O(log n)).
+- Unbalanced trees can degrade to linked list performance (O(n)).
+
+---
+
+Summary Table:
+
+| Data Structure  | Internal Working                   | Access Time | Insert/Delete Time      |
+|-----------------|----------------------------------|-------------|------------------------|
+| Array           | Contiguous memory array           | O(1)        | O(n) (middle)          |
+| ArrayList       | Dynamic array with resizing       | O(1)        | O(1) amortized at end  |
+| Linked List     | Nodes with pointers               | O(n)        | O(1) (if node known)   |
+| Stack           | Array or linked list (LIFO)       | O(1)        | O(1)                   |
+| Queue           | Array (circular) or linked list (FIFO) | O(1)    | O(1)                   |
+| Binary Search Tree | Nodes with left/right pointers  | O(log n) avg| O(log n) avg           |
+| Hash Table      | Array + hashing + collision handling | O(1) avg | O(1) avg               |
+
+
+
+primitive types vs custom types?
+1. Primitive Types:
+
+- Basic data types provided by the programming language.
+- Represent simple values and are usually stored directly in memory (stack).
+- Typically immutable and have fixed size.
+- Examples in Java/Kotlin:
+  - Java: int, boolean, byte, short, long, float, double, char
+  - Kotlin: Int, Boolean, Byte, Short, Long, Float, Double, Char (all are objects but treated like primitives for performance)
+- Operations on primitives are fast and low-level.
+- Not created using classes or objects.
+
+2. Custom Types:
+
+- User-defined types created using classes, structs, or other constructs.
+- Can encapsulate data and behavior (methods).
+- Stored as objects in heap memory (in JVM languages).
+- Can have fields, methods, constructors, inheritance, etc.
+- Examples: Person class, Order class, TreeNode class.
+- Allow modeling of complex data and behaviors.
+
+what is typescript?
+
+- TypeScript is a programming language developed by Microsoft.
+- It is a superset of JavaScript, meaning all JavaScript code is valid TypeScript.
+- Adds static typing to JavaScript, allowing variables and functions to have explicit types.
+- Helps catch errors during development through compile-time type checking.
+- Supports features like interfaces, enums, generics, and access modifiers.
+- TypeScript code is compiled (transpiled) into plain JavaScript to run in browsers or Node.js.
+- Improves code maintainability, tooling support (like autocompletion and refactoring), and scalability for large projects.
+
+what is react?
+- React is an open-source JavaScript library developed by Facebook.
+- Used for building user interfaces, especially single-page applications (SPAs).
+- Focuses on building UI components that can manage their own state.
+- Uses a virtual DOM (Document Object Model) to optimize UI updates efficiently.
+- Allows declarative programming, where you describe what the UI should look like, and React manages rendering.
+- Supports JSX, a syntax extension that lets you write HTML-like code inside JavaScript.
+- Widely used for creating dynamic, responsive web apps.
+
+what is angular?
+- Angular is an open-source web application framework developed by Google.
+- A complete framework for building client-side SPAs.
+- Uses TypeScript as its primary language.
+- Follows a component-based architecture similar to React but includes built-in solutions for routing, state management, HTTP client, forms, and more.
+- Uses two-way data binding to synchronize the model and the view automatically.
+- Provides dependency injection, directives, pipes, and other powerful features.
+- Well-suited for large-scale, enterprise-level applications.
+
+lifecycles in angular/react
+
+What are React Hooks?
+
+Hooks are special functions that let you “hook into” React features like state and lifecycle from functional components.
+Main React Hooks related to lifecycle:
+
+    useState(initialValue)
+
+        Lets you add state to functional components.
+
+        Trigger: State updates trigger re-render.
+
+    useEffect(callback, dependencies)
+
+        Runs side effects in functional components.
+
+        Combines behaviors of multiple lifecycle methods.
+
+
+
+useEffect	Yes	Runs after render; replaces lifecycle methods for side effects.
+useLayoutEffect	Yes	Runs synchronously after DOM updates; lifecycle-related.
+
+Other Common React Hooks
+
+1. useState(initialValue)
+   - Adds state to functional components.
+   - Returns a state variable and a setter function.
+   - Causes component to re-render on state change.
+
+2. useEffect(callback, dependencies)
+   - Performs side effects after render.
+   - Runs after first mount and whenever dependencies change.
+   - Can return cleanup function to run before unmount or before next effect.
+
+3. useContext(ContextObject)
+   - Accesses React context value.
+   - Makes it easier to share data (like themes, user info) without prop drilling.
+
+4. useReducer(reducer, initialState)
+   - An alternative to useState for complex state logic.
+   - Similar to Redux reducer pattern.
+   - Returns current state and dispatch function.
+
+
+Angular Lifecycle Hooks and When They Are Called
+
+1. ngOnChanges(changes: SimpleChanges)
+   When: Called whenever data-bound input properties change, before ngOnInit on first change.
+   Scenario: React to changes in @Input properties.
+
+2. ngOnInit()
+   When: Called once after the first ngOnChanges.
+   Scenario: Initialize component, fetch data, setup logic.
+
+3. ngDoCheck()
+   When: Called during every change detection run, after ngOnChanges and ngOnInit.
+   Scenario: Custom change detection beyond Angular’s default.
+
+4. ngAfterContentInit()
+   When: Called once after Angular projects external content into the component (via <ng-content>).
+   Scenario: Initialization that depends on projected content.
+
+5. ngAfterContentChecked()
+   When: After each check of projected content.
+   Scenario: Respond to changes in content projection.
+
+6. ngAfterViewInit()
+   When: Called once after component’s view (and child views) are initialized.
+   Scenario: Initialization that depends on component’s template or child components.
+
+7. ngAfterViewChecked()
+   When: After each check of component’s views.
+   Scenario: Respond to changes in the view.
+
+8. ngOnDestroy()
+   When: Just before Angular destroys the component.
+   Scenario: Cleanup resources like subscriptions or event handlers.
+
+what are observables? what is async? what are promises?
+What are Observables?
+
+- Observables are a programming concept used to handle asynchronous data streams.
+- They represent a collection of future values or events that can be observed over time.
+- You can subscribe to an observable to receive data updates, errors, or completion signals.
+- Commonly used in frameworks like Angular with RxJS (Reactive Extensions for JavaScript).
+- Observables support operators like map, filter, merge, which help transform data streams.
+- They can emit multiple values over time (unlike promises, which resolve once).
+- Example use case: Handling real-time data, user events, or HTTP requests that may emit multiple responses.
+
+What is Async?
+
+- "Async" stands for asynchronous programming, where operations run independently from the main program flow.
+- It allows programs to handle time-consuming tasks (like network calls, file I/O) without blocking the execution.
+- In JavaScript/TypeScript, async is often associated with async/await syntax to write asynchronous code that looks synchronous.
+- Async programming improves performance and responsiveness, especially in UI applications.
+
+What are Promises?
+
+- Promises represent a single future value resulting from an asynchronous operation.
+- They can be in one of three states: pending, fulfilled (resolved), or rejected.
+- Promises allow chaining with `.then()` for success and `.catch()` for errors.
+- Unlike observables, promises resolve once with a single value or error.
+- They simplify asynchronous code management compared to callbacks.
+- Often used for network requests, timers, or any async operation that returns a single result.
+
+what is a shadow dom?
+What is Shadow DOM?
+
+- Shadow DOM is a web standard that enables encapsulation of DOM and CSS in web components.
+- It allows a component to have its own isolated DOM subtree, separate from the main document DOM.
+- Styles and scripts inside the shadow DOM do not affect the main page and vice versa.
+- This encapsulation helps prevent CSS conflicts and keeps component implementation details hidden.
+- Shadow DOM is a key part of building reusable and self-contained web components.
+- Browsers support shadow DOM natively via the `attachShadow` method on elements.
+
+Example use case:
+- Creating a custom button component with styles that won’t be overridden or leak out.
+
+What algorithms I should be aware of and where should we use them?
+1. Quick Sort
+- A fast, efficient sorting algorithm using divide and conquer.
+- It picks a 'pivot' element, partitions the array into elements less and greater than the pivot, and recursively sorts them.
+- Average time complexity: O(n log n).
+- Used for sorting large datasets efficiently.
+
+2. Binary Search
+- Searches a sorted array by repeatedly dividing the search interval in half.
+- Compares the target value to the middle element; eliminates half the array each step.
+- Time complexity: O(log n).
+- Used in searching for elements in sorted data structures.
+
+3. Depth-First Search (DFS)
+- Explores as far as possible along each branch before backtracking.
+- Used to traverse or search tree and graph data structures.
+- Useful in solving puzzles, maze solving, and detecting cycles.
+
+4. Dynamic Programming (DP)
+- Solves complex problems by breaking them down into simpler overlapping subproblems.
+- Stores results of subproblems to avoid redundant calculations.
+- Used in optimization problems like the Knapsack problem, Fibonacci sequence, and shortest path.
+
+5. Breadth-First Search (BFS)
+- Explores all neighbors at the present depth before moving on to nodes at the next depth level.
+- Used in shortest path finding in unweighted graphs, level order traversal in trees.
+
+
+what is hashing?
+What is Hashing?
+
+- Hashing is the process of converting input data of any size (like a string or file) into a fixed-size value called a hash code or hash value.
+- This hash value is typically a number that represents the original data uniquely or nearly uniquely.
+- Hash functions are designed to distribute inputs uniformly across the output range.
+- Commonly used in data structures like hash tables, for quick data retrieval.
+- Also used in cryptography, checksums, and data integrity verification.
+
+What is a Hash Collision?
+
+- A hash collision occurs when two different inputs produce the same hash value.
+- Because hash functions map a large input space to a fixed-size output space, collisions are inevitable (pigeonhole principle).
+- Collisions can degrade the performance of hash-based data structures if not handled properly.
+- Collision resolution techniques include chaining (linked lists) and open addressing (probing).
+
+some common coding exercises
+
+// 1. Reverse a String
+// Requirement: Return the reversed version of the input string.
+// Explanation: Split string into array, reverse it, and join back to string.
+function reverseString(str) {
+  return str.split('').reverse().join('');
+}
+
+// 2. Find Maximum Number in Array
+// Requirement: Return the largest number from the array.
+// Explanation: Iterate through array, track max value.
+function findMax(arr) {
+  let max = arr[0];
+  for (let num of arr) {
+    if (num > max) max = num;
+  }
+  return max;
+}
+
+// 3. Check Palindrome String
+// Requirement: Return true if string reads same backward and forward.
+// Explanation: Use two pointers moving towards center, compare chars.
+function isPalindrome(str) {
+  let left = 0, right = str.length - 1;
+  while (left < right) {
+    if (str[left] !== str[right]) return false;
+    left++;
+    right--;
+  }
+  return true;
+}
+
+// 4. Fibonacci Number at Nth Position
+// Requirement: Return the Nth Fibonacci number.
+// Explanation: Iteratively calculate fib numbers using two vars.
+function fibonacci(n) {
+  if (n <= 1) return n;
+  let a = 0, b = 1;
+  for (let i = 2; i <= n; i++) {
+    let temp = a + b;
+    a = b;
+    b = temp;
+  }
+  return b;
+}
+
+// 5. Check Anagrams
+// Requirement: Return true if two strings are anagrams (same chars/frequency).
+// Explanation: Sort strings and compare equality.
+function areAnagrams(s1, s2) {
+  return s1.split('').sort().join('') === s2.split('').sort().join('');
+}
+
+// 6. Remove Duplicates from Array
+// Requirement: Return array with duplicates removed.
+// Explanation: Use Set to keep unique values.
+function removeDuplicates(arr) {
+  return [...new Set(arr)];
+}
+
+// 7. Merge Two Sorted Arrays
+// Requirement: Merge two sorted arrays into one sorted array.
+// Explanation: Use two pointers to merge in sorted order.
+function mergeSortedArrays(arr1, arr2) {
+  let i = 0, j = 0, merged = [];
+  while (i < arr1.length && j < arr2.length) {
+    if (arr1[i] < arr2[j]) {
+      merged.push(arr1[i++]);
+    } else {
+      merged.push(arr2[j++]);
+    }
+  }
+  return merged.concat(arr1.slice(i)).concat(arr2.slice(j));
+}
+
+// 8. Find Factorial of a Number
+// Requirement: Return factorial of n (n!).
+// Explanation: Multiply numbers from 1 to n.
+function factorial(n) {
+  let result = 1;
+  for (let i = 2; i <= n; i++) result *= i;
+  return result;
+}
+
+// 9. Check if Number is Prime
+// Requirement: Return true if number is prime.
+// Explanation: Check divisibility up to sqrt(n).
+function isPrime(n) {
+  if (n <= 1) return false;
+  for (let i = 2; i * i <= n; i++) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}
+
+// 10. Find Second Largest Number
+// Requirement: Return the second largest number in array.
+// Explanation: Track largest and second largest while iterating.
+function secondLargest(arr) {
+  let largest = -Infinity, second = -Infinity;
+  for (let num of arr) {
+    if (num > largest) {
+      second = largest;
+      largest = num;
+    } else if (num > second && num !== largest) {
+      second = num;
+    }
+  }
+  return second;
+}
+
+// 11. Count Vowels in String
+// Requirement: Return number of vowels in the input string.
+// Explanation: Iterate and count vowels (a,e,i,o,u).
+function countVowels(str) {
+  let count = 0;
+  const vowels = new Set(['a','e','i','o','u']);
+  for (let ch of str.toLowerCase()) {
+    if (vowels.has(ch)) count++;
+  }
+  return count;
+}
+
+// 12. Flatten Nested Array
+// Requirement: Flatten arbitrarily nested arrays into one array.
+// Explanation: Recursively flatten each element.
+function flattenArray(arr) {
+  let result = [];
+  for (let el of arr) {
+    if (Array.isArray(el)) {
+      result = result.concat(flattenArray(el));
+    } else {
+      result.push(el);
+    }
+  }
+  return result;
+}
+
+// 13. Find Missing Number in 1 to N
+// Requirement: Given array with numbers from 1 to N with one missing, find missing number.
+// Explanation: Use sum formula or XOR to find missing value.
+function findMissingNumber(arr, n) {
+  const expectedSum = (n * (n + 1)) / 2;
+  const actualSum = arr.reduce((a,b) => a + b, 0);
+  return expectedSum - actualSum;
+}
+
+// 14. Implement FizzBuzz
+// Requirement: Print numbers 1 to n, but for multiples of 3 print 'Fizz', for 5 print 'Buzz', for both print 'FizzBuzz'.
+// Explanation: Check divisibility by 3 and 5.
+function fizzBuzz(n) {
+  for (let i = 1; i <= n; i++) {
+    if (i % 15 === 0) console.log('FizzBuzz');
+    else if (i % 3 === 0) console.log('Fizz');
+    else if (i % 5 === 0) console.log('Buzz');
+    else console.log(i);
+  }
+}
+
+// 15. Check if Two Arrays are Equal
+// Requirement: Return true if both arrays have the same elements in the same order.
+// Explanation: Compare lengths and elements one by one.
+function arraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) return false;
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false;
+  }
+  return true;
+}
+
+// 16. Count Occurrences of Characters in String
+// Requirement: Return an object with counts of each character in string.
+// Explanation: Use object/map to count frequencies.
+function charCount(str) {
+  const count = {};
+  for (let ch of str) {
+    count[ch] = (count[ch] || 0) + 1;
+  }
+  return count;
+}
+
+// 17. Find Intersection of Two Arrays
+// Requirement: Return array of elements common to both input arrays.
+// Explanation: Use a set for one array and filter the other.
+function intersection(arr1, arr2) {
+  const set2 = new Set(arr2);
+  return arr1.filter(x => set2.has(x));
+}
+
+// 18. Reverse Words in a Sentence
+// Requirement: Reverse the order of words in a string sentence.
+// Explanation: Split by space, reverse array, join back.
+function reverseWords(sentence) {
+  return sentence.split(' ').reverse().join(' ');
+}
+
+// 19. Check if Number is Power of Two
+// Requirement: Return true if number is power of two.
+// Explanation: Use bitwise trick (n & (n-1)) === 0 for positive n.
+function isPowerOfTwo(n) {
+  if (n <= 0) return false;
+  return (n & (n - 1)) === 0;
+}
+
+// 20. Implement Binary Search
+// Requirement: Search target in sorted array and return index or -1 if not found.
+// Explanation: Use divide and conquer by checking middle element.
+function binarySearch(arr, target) {
+  let left = 0, right = arr.length - 1;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (arr[mid] === target) return mid;
+    else if (arr[mid] < target) left = mid + 1;
+    else right = mid - 1;
+  }
+  return -1;
+}
+
