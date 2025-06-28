@@ -55,10 +55,24 @@ What is a DNS?
 It's a service that maps a domain name to an ip address
 
 What is a Proxy?
-Acts as a  middleman to protect your identity through the internet?
+A proxy is something that acts on behalf of something else—it stands in the middle between a client and a target (like a server, object, or service) to control, filter, modify, or observe communication.
+Reverse Proxy	Sits in front of servers, routes incoming requests	Like a gatekeeper at a concert directing you to the right section
 
-What is reverse proxy?
-Acts as a middleman to protect a private network of servers from internet
+What is a middleware?
+Middleware is a term commonly used in software development to describe a piece of code that sits between two layers of an application and helps manage the communication, data, or behavior between them.
+🛠 Common Tasks Middleware Performs:
+
+    Authentication (check if user is logged in)
+
+    Authorization (check if user has permission)
+
+    Logging (record details about requests)
+
+    Data validation (check if input is valid)
+
+    Error handling
+
+    Response formatting
 
 What is vertical Scaling ? Horizontal scalling?
 vertical scaling -> bigger server
@@ -82,8 +96,7 @@ What is a CDN?
 Content delivery network -> a global network of distributed servers that work together to deliver content.
 
 What is cdn cache?
-A CDN cache refers to the content delivery network (CDN) storing copies of content—such as images, videos, stylesheets, scripts, or even entire 
-web pages—closer to users to reduce latency and server load.
+A CDN cache refers to the content delivery network (CDN) storing copies of content—such as images, videos, stylesheets, scripts, or even entire web pages—closer to users to reduce latency and server load.
 You run a website hosted in New York. A user in Tokyo visits your site.
 	Without a CDN: The user in Tokyo loads the site directly from New York—slow and possibly inefficient.
 	With a CDN: A CDN server in Japan already has a cached version of your site’s static content. The user accesses that local copy—much faster.Faster loading times,Reduced origin server load,Better scalability,Improved user experience globally
@@ -108,6 +121,31 @@ L – Liskov Substitution Principle (LSP)
 - If class B is a subclass of class A, it should behave in a way that doesn’t break the expectations of A.
 - Example: You should be able to use a subclass wherever a superclass is expected without errors or unexpected behavior.
 
+// Step 1: Create a common interface
+interface PaymentMethod {
+    fun process()
+}
+
+// Step 2: Implement each payment method
+class CreditCardPayment : PaymentMethod {
+    override fun process() = println("Processing credit card")
+}
+
+class PayPalPayment : PaymentMethod {
+    override fun process() = println("Processing PayPal")
+}
+
+class CryptoPayment : PaymentMethod {
+    override fun process() = println("Processing crypto")
+}
+
+// Step 3: Use polymorphism (extend, don't modify)
+class PaymentProcessor {
+    fun process(payment: PaymentMethod) {
+        payment.process()
+    }
+}
+
 I – Interface Segregation Principle (ISP)
 - No client should be forced to depend on methods it does not use.
 - Create specific interfaces instead of one large general-purpose interface.
@@ -117,17 +155,35 @@ D – Dependency Inversion Principle (DIP)
 - High-level modules should not depend on low-level modules. Both should depend on abstractions.
 - Abstractions should not depend on details. Details should depend on abstractions.
 - Example: Use interfaces or abstract classes so you can swap implementations without changing the higher-level logic.
+interface MessageService {
+    fun sendMessage(message: String)
+}
 
+// Low-level modules
+class EmailService : MessageService {
+    override fun sendMessage(message: String) {
+        println("Sending email: $message")
+    }
+}
+
+class SmsService : MessageService {
+    override fun sendMessage(message: String) {
+        println("Sending SMS: $message")
+    }
+}
+
+// High-level module depends on abstraction
+class NotificationManager(private val service: MessageService) {
+    fun notify(message: String) {
+        service.sendMessage(message)
+    }
+}
 
 
 What are message queues?
 Is a way of communicating asynchronously without blocking other operations,
 Producer -> produces a message in a queue that temporaly holds the message and the consumer retrieves the message and process it.
 More information?!
-
-
-what are distributed systems?
-Distributed systems are a type of computing system in which multiple independent computers (nodes) work together to appear as a single coherent system to the user.
 
 What are distributed messaging systems ? Apache kafka?
 	A distributed messaging system is a software system designed to send and receive messages between different parts of a distributed system, reliably and at scale. These systems decouple producers (senders of data) from consumers (receivers of data), improving scalability, fault tolerance, and real-time data flow across services or applications.
@@ -275,9 +331,25 @@ Uses JSON
 
 What is SOAP?
 Is a communication that is based on XML, highly used on payment services. complex and verbose
+🔒 Security (WS-Security)	SOAP supports enterprise-grade message-level security, encryption, and signing — essential for transmitting sensitive financial data.
+📜 Strict contracts (WSDL)	Payment services demand strict schemas. With WSDL, clients know exactly what structure to send and expect.
 
 What is gRPC?
 High performance, it uses binary encoding, favor for microservices communication, most used for communication server to server
+gRPC uses Protocol Buffers (protobuf) instead of JSON or XML.
+
+Protobuf is a compact, binary format, which means:
+
+    Smaller payloads (less data to transfer)
+
+    Faster serialization/deserialization
+
+    Lower CPU and memory usage
+Multiplexing: Multiple requests/responses in parallel over a single connection
+
+Stream support: Real-time bidirectional communication (client and server can push data)
+
+Header compression: Smaller metadata = faster transmission
 
 HTTP Verbs
 
@@ -306,6 +378,50 @@ Ex sql -> Predefined schema, respects ACID(
  CONSISTENCY-> stops invalid data from messing up the db (respects the constraints),
   ISOLATION -> concurrent transactions are isolated from each other, 
  DURABILITY-> data is persisted after transaction is commited even in system failure) proerpties, strong consistency, structured relationships
+ When multiple threads (or users/processes) try to modify the same data in a SQL database, you can run into concurrency issues, such as:
+ Lost updates
+Pesimistic locking -> locking the row
+Optimistic locking -> check before commit
+    @Version
+    var version: Long = 0
+    
+ 1. READ_UNCOMMITTED
+
+    🔸 Allows dirty reads (reading data that another transaction has written but not yet committed).
+
+    ✅ Fast, but ❌ unsafe.
+
+    Use case: Rare—used only for performance on non-critical reads.
+
+2. READ_COMMITTED (✅ Default in many RDBMS like PostgreSQL)
+
+    ❌ Prevents dirty reads.
+
+    ✅ A transaction only sees committed changes from others.
+
+    ❌ But allows non-repeatable reads (reading same row twice and getting different data).
+
+    Use case: Basic consistency without too much locking.
+
+3. REPEATABLE_READ
+
+    ✅ Prevents dirty and non-repeatable reads.
+
+    ❌ Allows phantom reads (re-running a query might return more rows).
+
+    Uses row-level locks on read.
+
+    Use case: Critical reads across multiple operations.
+
+4. SERIALIZABLE
+
+    ✅ Prevents all issues: dirty, non-repeatable, and phantom reads.
+
+    Most strict and slowest.
+
+    Acts like each transaction runs one after another.
+
+    Use case: Financial operations or critical data workflows.
 NonRelational
 NOSQL -> high scalability, performance, flexible schema
 
@@ -349,6 +465,26 @@ Method overriding is when a subclass provides a specific implementation of a met
 Key difference:
 - Overloading: same class, different parameters.
 - Overriding: subclass modifies superclass method, same parameters.
+
+
+What is polymorphism? 
+
+1. What is polymorphism, and why is it useful?
+ It allows objects of different classes to be treated as objects of a common super class. It enables a single function, method, or operator to work in different ways based on the object it is acting upon.
+Answer:
+Polymorphism allows objects of different classes to be treated through a common interface, enabling flexible and scalable code. It promotes loose coupling and code reuse.
+2. What's the difference between method overloading and overriding?
+
+Answer:
+
+    Overloading: Same method name, different parameters (compile-time polymorphism).
+
+    Overriding: Subclass changes behavior of superclass method (run-time polymorphism).
+
+3. How does polymorphism improve extensibility?
+
+Answer:
+You can add new types (e.g., a PushNotifier) without changing the code that uses the Notifier interface. This follows the Open/Closed Principle – open for extension, closed for modification.
 
 ---
 
@@ -649,6 +785,23 @@ Data structures?
 - Common data structures include arrays, linked lists, stacks, queues, trees, graphs, hash tables, etc.
 
 Data Structures and How They Work Internally
+what are the threadsafe data structures in kotlin/java?
+1. Collections in java.util.concurrent package
+
+    ConcurrentHashMap<K, V>
+    A highly scalable, thread-safe implementation of a hash map. Unlike synchronized maps, it allows concurrent read and updates without locking the entire map.
+
+    CopyOnWriteArrayList<E>
+    A thread-safe variant of ArrayList. It creates a new copy of the underlying array on each write (add, remove), so reads don’t block. Great for scenarios with many reads and few writes.
+
+    CopyOnWriteArraySet<E>
+    Similar to CopyOnWriteArrayList, but for sets.
+
+    ConcurrentLinkedQueue<E>
+    A thread-safe, non-blocking FIFO queue based on linked nodes.
+
+    ConcurrentSkipListMap<K, V> and ConcurrentSkipListSet<E>
+    Thread-safe sorted map and set implementations.
 
 1. Array:
 - Fixed-size contiguous block of memory storing elements.
@@ -689,6 +842,31 @@ Data Structures and How They Work Internally
 - Average operations (search/insert/delete) are O(1).
 - Performance depends on hash function quality and load factor.
 
+Set (HashSet)
+
+    Description:
+    Stores unique elements with no guaranteed order. Uses a hash table internally.
+
+    Time Complexity:
+
+        Add / Remove / Contains: O(1) average
+
+        Worst case: O(n) (rare, depends on hash collisions)
+
+    When to use:
+    Use when you need fast lookups and don’t care about order of elements. Great for checking membership or removing duplicates quickly.
+
+TreeSet
+
+    Description:
+    Stores unique elements in sorted order. Internally a self-balancing binary search tree (Red-Black tree).
+
+    Time Complexity:
+
+        Add / Remove / Contains: O(log n)
+
+    When to use:
+    Use when you need the elements sorted or want to perform range queries (like getting elements between two values). Good when order matters and you still need reasonably fast operations.
 ---
 
 Common Interview Questions and Answers:
@@ -739,7 +917,7 @@ Summary Table:
 
 
 
-primitive types vs custom types?
+primitive types vs reference types?
 1. Primitive Types:
 
 - Basic data types provided by the programming language.
@@ -945,6 +1123,10 @@ What is Hashing?
 - Commonly used in data structures like hash tables, for quick data retrieval.
 - Also used in cryptography, checksums, and data integrity verification.
 
+what is the contract between hashcode and equals?
+	If two objects are equal according to equals(), then they must have the same hashCode() value.
+	If two objects have the same hashCode(), they are not necessarily equal.
+	
 What is a Hash Collision?
 
 - A hash collision occurs when two different inputs produce the same hash value.
