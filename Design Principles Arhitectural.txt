@@ -4,6 +4,45 @@ System Design questions =========================================
 
 What is a microservice arhitecture and what are the advantages and drawbacks?
 
+- Microservice architecture is an approach to designing software systems as a collection of small, independent, loosely coupled services.
+- Each microservice focuses on a specific business capability and can be developed, deployed, and scaled independently.
+- Microservices communicate with each other via APIs, often over HTTP/REST, messaging queues, or gRPC.
+- This contrasts with monolithic architecture where all components are tightly integrated into a single application.
+
+Advantages of Microservice Architecture:
+
+1. Scalability:
+   - Each service can be scaled independently based on demand, improving resource utilization.
+
+2. Flexibility in Technology:
+   - Different microservices can be built using different programming languages or frameworks best suited to the task.
+
+3. Faster Development and Deployment:
+   - Teams can develop, test, and deploy services independently, speeding up release cycles.
+
+4. Fault Isolation:
+   - Failure in one microservice usually does not impact the entire system.
+
+5. Easier Maintenance:
+   - Smaller codebases are easier to understand, manage, and update.
+
+Drawbacks of Microservice Architecture:
+
+1. Complexity:
+   - Managing many services increases operational complexity,monitoring, and debugging.
+
+2. Distributed System Challenges:
+   - Issues like network latency, message serialization, and eventual consistency must be handled.
+
+3. Data Management:
+   - Managing transactions and consistency across services can be difficult.
+
+4. Increased Resource Use:
+   - Each microservice runs in its own process, often requiring more memory and CPU than a monolith.
+
+5. Testing and Debugging:
+   - End-to-end testing is more complex due to multiple independent services interacting.
+
 
 What is a load balancer? 
 A load balancer is acting as a gate in front of our services that routes the request to the available node with least amount of load. 
@@ -26,7 +65,8 @@ vertical scaling -> bigger server
 horizontal scaling -> multiple servers -> more fault tollerant, distribute the workload to multiple machines
 
 How to scale the database?
-Indexing -> is a way of going directly to the data needed, without searching in the entire table, we should index only the most accessed columns because it slows down writing
+Indexing -> is a way of going directly to the data needed, without searching in the entire table,
+we should index only the most accessed columns because it slows down writing
 
 Replication -> Primary replicas -> write to the other replicas -> each replica can be called by calls using load balancer -> what is used for?
 
@@ -36,30 +76,49 @@ VERTICAL PARTITIONING -> splitting a huge table into small tables to reduce unne
 
 Denormalization -> reduces the number of joins by combining related data into a single table (used in read-heavy application)
 
-Distributed systems Cap theorem -> consistency availability partition tolerance -> cannot be achieved all in the same time
-
 Where you can store large files ? -> Blob storage like AWS S3, get's an unique url that can be used
 
 What is a CDN?
 Content delivery network -> a global network of distributed servers that work together to deliver content.
 
 What is cdn cache?
-A CDN cache refers to the content delivery network (CDN) storing copies of content—such as images, videos, stylesheets, scripts, or even entire web pages—closer to users to reduce latency and server load.
+A CDN cache refers to the content delivery network (CDN) storing copies of content—such as images, videos, stylesheets, scripts, or even entire 
+web pages—closer to users to reduce latency and server load.
 You run a website hosted in New York. A user in Tokyo visits your site.
 	Without a CDN: The user in Tokyo loads the site directly from New York—slow and possibly inefficient.
-	With a CDN: A CDN server in Japan already has a cached version of your site’s static content. The user accesses that local copy—		much faster.Faster loading times,Reduced origin server load,Better scalability,Improved user experience globally
+	With a CDN: A CDN server in Japan already has a cached version of your site’s static content. The user accesses that local copy—much faster.Faster loading times,Reduced origin server load,Better scalability,Improved user experience globally
     
 What is caching?
 Storing frequently access data in memory
 Cache aside patterns -> application looks for the cache if it has it retrieves directly, if not it calls the db. To prevent outDated value for being served use TTL
 
-What are microservices?
-Each microservice handles a single responsability.has its own logic and can scale independently, loosly coupled
-
 What are SOLID principles?
-Single responsability => it should have one and only one responsability and reason to change
-Open closed principle => open for extension closed for modification => A parent interface is implemented by multiple classes, if we want to add another implementation we just need to implement again.
-Liskov Substitution => Child classes must be replaceable by their base classes 
+S – Single Responsibility Principle (SRP)
+- A class should have only one reason to change.
+- This means each class should focus on a single task or responsibility.
+- Example: Don't mix business logic and logging in the same class.
+
+O – Open/Closed Principle (OCP)
+- Software entities (classes, modules, functions) should be open for extension but closed for modification.
+- You should be able to add new functionality without changing existing code.
+- Example: Use interfaces and abstract classes so new behavior can be added through inheritance.
+
+L – Liskov Substitution Principle (LSP)
+- Subtypes must be substitutable for their base types.
+- If class B is a subclass of class A, it should behave in a way that doesn’t break the expectations of A.
+- Example: You should be able to use a subclass wherever a superclass is expected without errors or unexpected behavior.
+
+I – Interface Segregation Principle (ISP)
+- No client should be forced to depend on methods it does not use.
+- Create specific interfaces instead of one large general-purpose interface.
+- Example: Don’t create a `Bird` interface with `fly()` if some birds don’t fly (like penguins).
+
+D – Dependency Inversion Principle (DIP)
+- High-level modules should not depend on low-level modules. Both should depend on abstractions.
+- Abstractions should not depend on details. Details should depend on abstractions.
+- Example: Use interfaces or abstract classes so you can swap implementations without changing the higher-level logic.
+
+
 
 What are message queues?
 Is a way of communicating asynchronously without blocking other operations,
@@ -69,13 +128,6 @@ More information?!
 
 what are distributed systems?
 Distributed systems are a type of computing system in which multiple independent computers (nodes) work together to appear as a single coherent system to the user.
-Scalability – Add more machines to handle more users or data
-
-Fault tolerance – One machine failing doesn’t crash the whole system
-
-Resource sharing – Different systems can share computing power, storage, etc.
-
-Geographical distribution – Useful for global services
 
 What are distributed messaging systems ? Apache kafka?
 	A distributed messaging system is a software system designed to send and receive messages between different parts of a distributed system, reliably and at scale. These systems decouple producers (senders of data) from consumers (receivers of data), improving scalability, fault tolerance, and real-time data flow across services or applications.
@@ -99,7 +151,7 @@ what is the efficiency? Latency? Throughtput?
 ⚡ Efficiency
 
     Efficiency is how well a system uses resources (like CPU, memory, time, energy) to perform a task.
-what is cap theorem?
+    
 Latency is the time delay between a request and the corresponding response.
 Types:
     Network latency: Time for data to travel across a network.
@@ -113,11 +165,11 @@ Types:
         Transactions per second (TPS)
         MB/s or GB/s (for data)    
         
-What is Rate limiting?
-Is adding restrictions of number requests per time unit, if the limit is exceeded servers blocks requests
-
 What is APi GATEWAY?
 It provides Authentication, rate limiting, logging, monitoring, request routing
+
+What is Rate limiting?
+Is adding restrictions of number requests per time unit, if the limit is exceeded servers blocks requests
 
 What is Idempotency?
 Multiple requests produce the same result. Each request has assigned a unique id. server checks if that id has already been handled before processing again a failed request
@@ -180,9 +232,6 @@ C. Behavioral Patterns (object interaction)
 
 explain some projects that you worked on, what did you use?
 
-What is single point of failure in distributed systems?
-A **Single Point of Failure (SPOF)** is any **individual component** in a system whose failure would cause the **entire system or service to stop working**.
-
 What are SLO's and SLA's?
 
 These are key terms used in service reliability and performance management, especially in cloud services and distributed systems.
@@ -214,13 +263,10 @@ What is an anti-pattern?
 
 Advanced knowledge questions =======================================================
 
-What is latency?
-Is the time that a server responds to client. How to make it faster? Deploy datacenters to multiple regions
-
-What HTTP/HTTPS is?
+What is HTTP/HTTPS ?
 Is a protocol with the help that client communicates with servers (HTTPS uses TLS or SSL in such a way that even if the request is intercepted the atacker cannot access the request data). HTTP protocol doesn t define how request should be structured, what is the format of resonse or how client should interact with server.
 
-What is APIS
+What are APIS
 Application programming interface is a set of rules that define how client and server needs to communicate-> API STYLES REST, GRAPHQL ,SOAP
 
 What is REST?
@@ -910,218 +956,219 @@ some common coding exercises
 
 // 1. Reverse a String
 // Requirement: Return the reversed version of the input string.
-// Explanation: Split string into array, reverse it, and join back to string.
-function reverseString(str) {
-  return str.split('').reverse().join('');
+// Explanation: Kotlin provides a built-in reversed() function.
+fun reverseString(str: String): String {
+    return str.reversed()
 }
 
 // 2. Find Maximum Number in Array
 // Requirement: Return the largest number from the array.
-// Explanation: Iterate through array, track max value.
-function findMax(arr) {
-  let max = arr[0];
-  for (let num of arr) {
-    if (num > max) max = num;
-  }
-  return max;
+// Explanation: Iterate through array and track max value.
+fun findMax(arr: List<Int>): Int {
+    var max = arr[0]
+    for (num in arr) {
+        if (num > max) max = num
+    }
+    return max
 }
 
 // 3. Check Palindrome String
 // Requirement: Return true if string reads same backward and forward.
-// Explanation: Use two pointers moving towards center, compare chars.
-function isPalindrome(str) {
-  let left = 0, right = str.length - 1;
-  while (left < right) {
-    if (str[left] !== str[right]) return false;
-    left++;
-    right--;
-  }
-  return true;
+// Explanation: Use two pointers moving toward the center, compare characters.
+fun isPalindrome(str: String): Boolean {
+    var left = 0
+    var right = str.length - 1
+    while (left < right) {
+        if (str[left] != str[right]) return false
+        left++
+        right--
+    }
+    return true
 }
 
 // 4. Fibonacci Number at Nth Position
 // Requirement: Return the Nth Fibonacci number.
-// Explanation: Iteratively calculate fib numbers using two vars.
-function fibonacci(n) {
-  if (n <= 1) return n;
-  let a = 0, b = 1;
-  for (let i = 2; i <= n; i++) {
-    let temp = a + b;
-    a = b;
-    b = temp;
-  }
-  return b;
+// Explanation: Use two variables and iterate to calculate the nth number.
+fun fibonacci(n: Int): Int {
+    if (n <= 1) return n
+    var a = 0
+    var b = 1
+    for (i in 2..n) {
+        val temp = a + b
+        a = b
+        b = temp
+    }
+    return b
 }
 
 // 5. Check Anagrams
-// Requirement: Return true if two strings are anagrams (same chars/frequency).
-// Explanation: Sort strings and compare equality.
-function areAnagrams(s1, s2) {
-  return s1.split('').sort().join('') === s2.split('').sort().join('');
+// Requirement: Return true if two strings have the same characters in any order.
+// Explanation: Convert to char arrays, sort, and compare.
+fun areAnagrams(s1: String, s2: String): Boolean {
+    return s1.toCharArray().sorted() == s2.toCharArray().sorted()
 }
 
 // 6. Remove Duplicates from Array
-// Requirement: Return array with duplicates removed.
-// Explanation: Use Set to keep unique values.
-function removeDuplicates(arr) {
-  return [...new Set(arr)];
+// Requirement: Return list with duplicates removed.
+// Explanation: Convert to Set to remove duplicates, then back to List.
+fun removeDuplicates(arr: List<Int>): List<Int> {
+    return arr.toSet().toList()
 }
 
 // 7. Merge Two Sorted Arrays
 // Requirement: Merge two sorted arrays into one sorted array.
-// Explanation: Use two pointers to merge in sorted order.
-function mergeSortedArrays(arr1, arr2) {
-  let i = 0, j = 0, merged = [];
-  while (i < arr1.length && j < arr2.length) {
-    if (arr1[i] < arr2[j]) {
-      merged.push(arr1[i++]);
-    } else {
-      merged.push(arr2[j++]);
+// Explanation: Use two pointers to merge efficiently.
+fun mergeSortedArrays(arr1: List<Int>, arr2: List<Int>): List<Int> {
+    var i = 0
+    var j = 0
+    val merged = mutableListOf<Int>()
+    while (i < arr1.size && j < arr2.size) {
+        if (arr1[i] < arr2[j]) {
+            merged.add(arr1[i++])
+        } else {
+            merged.add(arr2[j++])
+        }
     }
-  }
-  return merged.concat(arr1.slice(i)).concat(arr2.slice(j));
+    while (i < arr1.size) merged.add(arr1[i++])
+    while (j < arr2.size) merged.add(arr2[j++])
+    return merged
 }
 
 // 8. Find Factorial of a Number
 // Requirement: Return factorial of n (n!).
 // Explanation: Multiply numbers from 1 to n.
-function factorial(n) {
-  let result = 1;
-  for (let i = 2; i <= n; i++) result *= i;
-  return result;
+fun factorial(n: Int): Int {
+    var result = 1
+    for (i in 2..n) result *= i
+    return result
 }
 
 // 9. Check if Number is Prime
 // Requirement: Return true if number is prime.
-// Explanation: Check divisibility up to sqrt(n).
-function isPrime(n) {
-  if (n <= 1) return false;
-  for (let i = 2; i * i <= n; i++) {
-    if (n % i === 0) return false;
-  }
-  return true;
+// Explanation: Check divisibility from 2 to sqrt(n).
+fun isPrime(n: Int): Boolean {
+    if (n <= 1) return false
+    for (i in 2..Math.sqrt(n.toDouble()).toInt()) {
+        if (n % i == 0) return false
+    }
+    return true
 }
 
 // 10. Find Second Largest Number
 // Requirement: Return the second largest number in array.
 // Explanation: Track largest and second largest while iterating.
-function secondLargest(arr) {
-  let largest = -Infinity, second = -Infinity;
-  for (let num of arr) {
-    if (num > largest) {
-      second = largest;
-      largest = num;
-    } else if (num > second && num !== largest) {
-      second = num;
+fun secondLargest(arr: List<Int>): Int {
+    var largest = Int.MIN_VALUE
+    var second = Int.MIN_VALUE
+    for (num in arr) {
+        if (num > largest) {
+            second = largest
+            largest = num
+        } else if (num > second && num != largest) {
+            second = num
+        }
     }
-  }
-  return second;
+    return second
 }
 
 // 11. Count Vowels in String
 // Requirement: Return number of vowels in the input string.
 // Explanation: Iterate and count vowels (a,e,i,o,u).
-function countVowels(str) {
-  let count = 0;
-  const vowels = new Set(['a','e','i','o','u']);
-  for (let ch of str.toLowerCase()) {
-    if (vowels.has(ch)) count++;
-  }
-  return count;
+fun countVowels(str: String): Int {
+    val vowels = setOf('a', 'e', 'i', 'o', 'u')
+    return str.lowercase().count { it in vowels }
 }
 
 // 12. Flatten Nested Array
 // Requirement: Flatten arbitrarily nested arrays into one array.
 // Explanation: Recursively flatten each element.
-function flattenArray(arr) {
-  let result = [];
-  for (let el of arr) {
-    if (Array.isArray(el)) {
-      result = result.concat(flattenArray(el));
-    } else {
-      result.push(el);
+fun flattenArray(arr: List<Any>): List<Any> {
+    val result = mutableListOf<Any>()
+    for (el in arr) {
+        if (el is List<*>) {
+            result.addAll(flattenArray(el.filterNotNull()))
+        } else {
+            result.add(el)
+        }
     }
-  }
-  return result;
+    return result
 }
 
 // 13. Find Missing Number in 1 to N
 // Requirement: Given array with numbers from 1 to N with one missing, find missing number.
-// Explanation: Use sum formula or XOR to find missing value.
-function findMissingNumber(arr, n) {
-  const expectedSum = (n * (n + 1)) / 2;
-  const actualSum = arr.reduce((a,b) => a + b, 0);
-  return expectedSum - actualSum;
+// Explanation: Use sum formula.
+fun findMissingNumber(arr: List<Int>, n: Int): Int {
+    val expectedSum = n * (n + 1) / 2
+    val actualSum = arr.sum()
+    return expectedSum - actualSum
 }
 
 // 14. Implement FizzBuzz
-// Requirement: Print numbers 1 to n, but for multiples of 3 print 'Fizz', for 5 print 'Buzz', for both print 'FizzBuzz'.
-// Explanation: Check divisibility by 3 and 5.
-function fizzBuzz(n) {
-  for (let i = 1; i <= n; i++) {
-    if (i % 15 === 0) console.log('FizzBuzz');
-    else if (i % 3 === 0) console.log('Fizz');
-    else if (i % 5 === 0) console.log('Buzz');
-    else console.log(i);
-  }
+// Requirement: Print numbers 1 to n, replace multiples of 3 with 'Fizz', 5 with 'Buzz', both with 'FizzBuzz'.
+fun fizzBuzz(n: Int) {
+    for (i in 1..n) {
+        when {
+            i % 15 == 0 -> println("FizzBuzz")
+            i % 3 == 0 -> println("Fizz")
+            i % 5 == 0 -> println("Buzz")
+            else -> println(i)
+        }
+    }
 }
 
 // 15. Check if Two Arrays are Equal
-// Requirement: Return true if both arrays have the same elements in the same order.
-// Explanation: Compare lengths and elements one by one.
-function arraysEqual(arr1, arr2) {
-  if (arr1.length !== arr2.length) return false;
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) return false;
-  }
-  return true;
+// Requirement: Return true if both arrays have same elements in same order.
+fun arraysEqual(arr1: List<Int>, arr2: List<Int>): Boolean {
+    if (arr1.size != arr2.size) return false
+    for (i in arr1.indices) {
+        if (arr1[i] != arr2[i]) return false
+    }
+    return true
 }
 
 // 16. Count Occurrences of Characters in String
-// Requirement: Return an object with counts of each character in string.
-// Explanation: Use object/map to count frequencies.
-function charCount(str) {
-  const count = {};
-  for (let ch of str) {
-    count[ch] = (count[ch] || 0) + 1;
-  }
-  return count;
+// Requirement: Return map with counts of each character in string.
+fun charCount(str: String): Map<Char, Int> {
+    val count = mutableMapOf<Char, Int>()
+    for (ch in str) {
+        count[ch] = count.getOrDefault(ch, 0) + 1
+    }
+    return count
 }
 
 // 17. Find Intersection of Two Arrays
-// Requirement: Return array of elements common to both input arrays.
-// Explanation: Use a set for one array and filter the other.
-function intersection(arr1, arr2) {
-  const set2 = new Set(arr2);
-  return arr1.filter(x => set2.has(x));
+// Requirement: Return list of elements common to both arrays.
+fun intersection(arr1: List<Int>, arr2: List<Int>): List<Int> {
+    val set2 = arr2.toSet()
+    return arr1.filter { it in set2 }
 }
 
 // 18. Reverse Words in a Sentence
 // Requirement: Reverse the order of words in a string sentence.
-// Explanation: Split by space, reverse array, join back.
-function reverseWords(sentence) {
-  return sentence.split(' ').reverse().join(' ');
+fun reverseWords(sentence: String): String {
+    return sentence.split(" ").reversed().joinToString(" ")
 }
 
 // 19. Check if Number is Power of Two
 // Requirement: Return true if number is power of two.
-// Explanation: Use bitwise trick (n & (n-1)) === 0 for positive n.
-function isPowerOfTwo(n) {
-  if (n <= 0) return false;
-  return (n & (n - 1)) === 0;
+fun isPowerOfTwo(n: Int): Boolean {
+    if (n <= 0) return false
+    return (n and (n - 1)) == 0
 }
 
 // 20. Implement Binary Search
 // Requirement: Search target in sorted array and return index or -1 if not found.
-// Explanation: Use divide and conquer by checking middle element.
-function binarySearch(arr, target) {
-  let left = 0, right = arr.length - 1;
-  while (left <= right) {
-    let mid = Math.floor((left + right) / 2);
-    if (arr[mid] === target) return mid;
-    else if (arr[mid] < target) left = mid + 1;
-    else right = mid - 1;
-  }
-  return -1;
+fun binarySearch(arr: List<Int>, target: Int): Int {
+    var left = 0
+    var right = arr.size - 1
+    while (left <= right) {
+        val mid = (left + right) / 2
+        when {
+            arr[mid] == target -> return mid
+            arr[mid] < target -> left = mid + 1
+            else -> right = mid - 1
+        }
+    }
+    return -1
 }
 
