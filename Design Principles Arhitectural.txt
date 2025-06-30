@@ -183,7 +183,6 @@ class NotificationManager(private val service: MessageService) {
 What are message queues?
 Is a way of communicating asynchronously without blocking other operations,
 Producer -> produces a message in a queue that temporaly holds the message and the consumer retrieves the message and process it.
-More information?!
 
 What are distributed messaging systems ? Apache kafka?
 	A distributed messaging system is a software system designed to send and receive messages between different parts of a distributed system, reliably and at scale. These systems decouple producers (senders of data) from consumers (receivers of data), improving scalability, fault tolerance, and real-time data flow across services or applications.
@@ -253,6 +252,51 @@ API Gateway – Manage and expose APIs securely
     CloudTrail – Tracks user activity and API usage
     Athena – Query S3 data using SQL
     
+🌍 What is Terraform?
+
+Terraform is an open-source Infrastructure as Code (IaC) tool created by HashiCorp. It allows you to define and provision infrastructure using a declarative configuration language (HCL – HashiCorp Configuration Language).
+
+With Terraform, you write code to describe your cloud infrastructure (e.g., AWS, Azure, GCP)—like EC2 instances, VPCs, S3 buckets, IAM roles, etc.—and Terraform builds and manages that infrastructure for you.
+🛠️ Terraform in CI/CD for AWS
+
+In a CI/CD pipeline, Terraform is used to automate the provisioning and updating of cloud infrastructure, ensuring that deployments are:
+
+    Repeatable
+
+    Version-controlled
+
+    Consistent across environments
+
+👇 Example CI/CD Flow with Terraform:
+
+    ✅ Code Commit (GitHub, GitLab)
+
+    🧪 CI Runs Tests
+
+    📦 Build & Package App
+
+    🏗️ Terraform Applies Infra Changes
+
+        Creates/updates AWS resources (e.g., ECS cluster, S3 bucket, Lambda)
+
+    🚀 CD Deploys Application to Infra
+
+1. Q: What is Terraform, and how does it benefit CI/CD pipelines?
+A: Terraform is an Infrastructure as Code tool that allows you to define cloud infrastructure in code. In CI/CD, it helps automate infrastructure provisioning and updates, ensuring consistency, reproducibility, and reducing manual steps in deployments.
+
+2. Q: What are the basic stages of using Terraform in a deployment pipeline?
+A: The main stages are:
+
+    terraform init – Initialize Terraform configuration
+
+    terraform plan – Show what changes will be made
+
+    terraform apply – Apply those changes to the cloud provider
+    These steps are typically included in a CI/CD job after the app build phase.
+
+3. Q: How do you manage sensitive variables in Terraform in CI/CD?
+A: Use environment variables or secret managers (like AWS Secrets Manager, GitHub Actions secrets, or HashiCorp Vault). Never hard-code secrets in Terraform files—use terraform.tfvars or pass via -var flags and keep those files out of version control.
+
 what is a design pattern? what kind of patterns you know? where is it used?
 A design pattern is a reusable, proven solution to a common software design problem.
 A. Creational Patterns (object creation)
@@ -318,6 +362,51 @@ Key Features:
 What is an anti-pattern?
 
 Advanced knowledge questions =======================================================
+
+🧵 What is a Thread?
+
+A thread is the smallest unit of execution in a program. It's like a lightweight subprocess. Threads share the same memory space, allowing concurrent execution of code within the same application.
+
+Thread-safe means that a piece of code, function, or data structure can be safely used by multiple threads at the same time without causing race conditions, corrupted data, or unexpected behavior.
+🔒 How Thread-Safety Is Achieved:
+
+    Using synchronization (synchronized block in Java/Kotlin)
+
+    Using atomic variables (AtomicInteger, etc.)
+
+    Using thread-safe data structures (e.g., ConcurrentHashMap, CopyOnWriteArrayList)
+
+    Avoiding shared mutable state
+    
+✅ What is the Double-Checked Locking Idiom?
+It’s a design pattern used to reduce the overhead of acquiring a lock by first checking the locking condition without synchronization. Commonly used in singleton implementations to make them lazy and thread-safe.
+
+public class Singleton {
+    private static volatile Singleton instance;
+
+    public static Singleton getInstance() {
+        if (instance == null) {                     // 1st check (no locking)
+            synchronized (Singleton.class) {
+                if (instance == null) {             // 2nd check (with locking)
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+
+What is volatile?
+In Java (and similarly in Kotlin on the JVM), the volatile keyword is used to ensure visibility of changes to variables across threads.
+In a multithreaded environment, each thread may cache variables for performance. This means one thread’s changes to a variable may not be immediately visible to others.
+
+volatile fixes that by:
+
+    Preventing threads from caching the variable.
+
+    Forcing every read to get the latest value from main memory.
+
+    Forcing every write to update main memory immediately.
 
 What is HTTP/HTTPS ?
 Is a protocol with the help that client communicates with servers (HTTPS uses TLS or SSL in such a way that even if the request is intercepted the atacker cannot access the request data). HTTP protocol doesn t define how request should be structured, what is the format of resonse or how client should interact with server.
@@ -437,6 +526,46 @@ Real-time analytics	Uber's ride data tracking
 
 
 Basic Knowledge questions ==========================================================
+
+What is object oriented programming?
+Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects", which represent real-world entities. Each object has:
+
+    State (data/attributes)
+
+    Behavior (methods/functions)
+
+    Identity (a unique reference in memory)
+
+OOP helps structure code in a modular, reusable, and scalable way. It mimics how we think about and interact with real-world systems.
+
+What are the key concepts of object oriented programming?
+1. Encapsulation
+
+    Hides internal state and behavior.
+
+    Only exposes what is necessary via public methods.
+
+    ✅ Promotes data protection and modularity.
+2. Inheritance
+
+    Allows a class to inherit properties and behavior from another class.
+
+    ✅ Promotes code reuse.
+3. Polymorphism
+
+    Allows one interface to be used for multiple data types or behaviors.
+
+    ✅ Promotes flexibility and extensibility.
+    
+4. Abstraction
+
+    Hides complex implementation details and shows only the essential features.
+
+    ✅ Promotes clean APIs and decoupling.
+    
+What is composition?
+Composition is a core concept in object-oriented programming where one class contains an instance of another class to reuse its functionality. It's often described as a "has-a" relationship, as opposed to inheritance which is an "is-a" relationship.
+
 
 Overloading?
 Overloading is when multiple methods in the same class have the same name but different parameters (different type, number, or order).
